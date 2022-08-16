@@ -5,6 +5,7 @@
 fix: problem with default http request headers in axios client  
 fix: problem with `--sort-types` option  
 BREAKING_CHANGE: rename `.eta` file extensions to `.ejs`. Backward capability should be existed.
+fix: problem with default http request headers in axios client
 
 # 10.0.1  
 
