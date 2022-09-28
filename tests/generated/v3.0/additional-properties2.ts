@@ -9,9 +9,9 @@
  * ---------------------------------------------------------------
  */
 
-export type Primitive = string | number | boolean | null;
+export type IMySuperPrefixPrimitiveMySuperSuffix = string | number | boolean | null;
 
-export type PrimitiveMap = Record<string, Primitive>;
+export type IMySuperPrefixPrimitiveMapMySuperSuffix = Record<string, IMySuperPrefixPrimitiveMySuperSuffix>;
 
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;

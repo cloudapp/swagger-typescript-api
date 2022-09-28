@@ -12,12 +12,12 @@
 /**
  * some description
  */
-export interface Amount {
+export interface IMySuperPrefixAmountMySuperSuffix {
   /**
    * some description
    *
    */
-  currency: Currency;
+  currency: IMySuperPrefixCurrencyMySuperSuffix;
   /**
    * some description
    *
@@ -33,7 +33,7 @@ export interface Amount {
  * Describes the result of uploading an image resource
  * @example {"code":0,"type":"type","message":"message"}
  */
-export interface ApiResponse {
+export interface IMySuperPrefixApiResponseMySuperSuffix {
   /** @format int32 */
   code?: number;
   message?: string;
@@ -45,7 +45,7 @@ export interface ApiResponse {
  * A category for a pet
  * @example {"name":"name","id":6}
  */
-export interface Category {
+export interface IMySuperPrefixCategoryMySuperSuffix {
   /** @format int64 */
   id?: number;
   name?: string;
@@ -55,14 +55,31 @@ export interface Category {
  * some description
  * @pattern ^[A-Z]{3,3}$
  */
-export type Currency = string;
+export type IMySuperPrefixCurrencyMySuperSuffix = string;
+
+export interface IMySuperPrefixFindPetsByStatusParamsMySuperSuffix {
+  /** Status values that need to be considered for filter */
+  status: ("available" | "pending" | "sold")[];
+}
+
+export interface IMySuperPrefixFindPetsByTagsParamsMySuperSuffix {
+  /** Tags to filter by */
+  tags: string[];
+}
+
+export interface IMySuperPrefixLoginUserParamsMySuperSuffix {
+  /** The user name for login */
+  username: string;
+  /** The password for login in clear text */
+  password: string;
+}
 
 /**
  * Pet Order
  * An order for a pets from the pet store
  * @example {"petId":6,"quantity":1,"id":0,"shipDate":"2000-01-23T04:56:07.000+00:00","complete":false,"status":"placed"}
  */
-export interface Order {
+export interface IMySuperPrefixOrderMySuperSuffix {
   complete?: boolean;
   /** @format int64 */
   id?: number;
@@ -81,9 +98,9 @@ export interface Order {
  * A pet for sale in the pet store
  * @example {"photoUrls":["photoUrls","photoUrls"],"name":"doggie","id":0,"category":{"name":"name","id":6},"tags":[{"name":"name","id":1},{"name":"name","id":1}],"status":"available"}
  */
-export interface Pet {
+export interface IMySuperPrefixPetMySuperSuffix {
   /** A category for a pet */
-  category?: Category;
+  category?: IMySuperPrefixCategoryMySuperSuffix;
   /** @format int64 */
   id?: number;
   /** @example doggie */
@@ -91,18 +108,24 @@ export interface Pet {
   photoUrls: string[];
   /** pet status in the store */
   status?: "available" | "pending" | "sold";
-  tags?: Tag[];
+  tags?: IMySuperPrefixTagMySuperSuffix[];
 }
 
-export type PetIds = 10 | 20 | 30 | 40;
+export type IMySuperPrefixPetIdsMySuperSuffix = 10 | 20 | 30 | 40;
 
-export type PetIdsWithWrongEnum = 10 | 20 | 30 | 40;
+export type IMySuperPrefixPetIdsWithWrongEnumMySuperSuffix = 10 | 20 | 30 | 40;
 
-export enum PetNames {
+export enum IMySuperPrefixPetNamesMySuperSuffix {
   FluffyHero = "Fluffy Hero",
   PiggyPo = "Piggy Po",
   SwaggerTypescriptApi = "Swagger Typescript Api",
   UPPER_CASE = "UPPER_CASE",
+}
+
+export interface IMySuperPrefixSingleFormUrlEncodedRequestPayloadMySuperSuffix {
+  /** @format string */
+  param1: string;
+  param2: string;
 }
 
 /**
@@ -110,10 +133,24 @@ export enum PetNames {
  * A tag for a pet
  * @example {"name":"name","id":1}
  */
-export interface Tag {
+export interface IMySuperPrefixTagMySuperSuffix {
   /** @format int64 */
   id?: number;
   name?: string;
+}
+
+export interface IMySuperPrefixUpdatePetWithFormPayloadMySuperSuffix {
+  /** Updated name of the pet */
+  name?: string;
+  /** Updated status of the pet */
+  status?: string;
+}
+
+export interface IMySuperPrefixUploadFilePayloadMySuperSuffix {
+  /** Additional data to pass to server */
+  additionalMetadata?: string;
+  /** file to upload */
+  file?: File;
 }
 
 /**
@@ -121,7 +158,7 @@ export interface Tag {
  * A User who is purchasing from the pet store
  * @example {"firstName":"firstName","lastName":"lastName","password":"password","userStatus":6,"phone":"phone","id":0,"email":"email","username":"username"}
  */
-export interface User {
+export interface IMySuperPrefixUserMySuperSuffix {
   email?: string;
   firstName?: string;
   /** @format int64 */
@@ -367,7 +404,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/pet
      * @secure
      */
-    addPet: (body: Pet, params: RequestParams = {}) =>
+    addPet: (body: IMySuperPrefixPetMySuperSuffix, params: RequestParams = {}) =>
       this.request<any, void>({
         path: `/pet`,
         method: "POST",
@@ -386,7 +423,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request PUT:/pet
      * @secure
      */
-    updatePet: (body: Pet, params: RequestParams = {}) =>
+    updatePet: (body: IMySuperPrefixPetMySuperSuffix, params: RequestParams = {}) =>
       this.request<any, void>({
         path: `/pet`,
         method: "PUT",
@@ -405,14 +442,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/pet/findByStatus
      * @secure
      */
-    findPetsByStatus: (
-      query: {
-        /** Status values that need to be considered for filter */
-        status: ("available" | "pending" | "sold")[];
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<Pet[], void>({
+    findPetsByStatus: (query: IMySuperPrefixFindPetsByStatusParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixPetMySuperSuffix[], void>({
         path: `/pet/findByStatus`,
         method: "GET",
         query: query,
@@ -430,11 +461,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/pet/single-form-url-encoded
      */
     singleFormUrlEncodedRequest: (
-      data: {
-        /** @format string */
-        param1: string;
-        param2: string;
-      },
+      data: IMySuperPrefixSingleFormUrlEncodedRequestPayloadMySuperSuffix,
       params: RequestParams = {},
     ) =>
       this.request<void, void>({
@@ -505,14 +532,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @deprecated
      * @secure
      */
-    findPetsByTags: (
-      query: {
-        /** Tags to filter by */
-        tags: string[];
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<Pet[], void>({
+    findPetsByTags: (query: IMySuperPrefixFindPetsByTagsParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixPetMySuperSuffix[], void>({
         path: `/pet/findByTags`,
         method: "GET",
         query: query,
@@ -531,7 +552,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getPetById: (petId: number, params: RequestParams = {}) =>
-      this.request<Pet, void>({
+      this.request<IMySuperPrefixPetMySuperSuffix, void>({
         path: `/pet/${petId}`,
         method: "GET",
         secure: true,
@@ -550,12 +571,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     updatePetWithForm: (
       petId: number,
-      data: {
-        /** Updated name of the pet */
-        name?: string;
-        /** Updated status of the pet */
-        status?: string;
-      },
+      data: IMySuperPrefixUpdatePetWithFormPayloadMySuperSuffix,
       params: RequestParams = {},
     ) =>
       this.request<any, void>({
@@ -593,17 +609,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/pet/{petId}/uploadImage
      * @secure
      */
-    uploadFile: (
-      petId: number,
-      data: {
-        /** Additional data to pass to server */
-        additionalMetadata?: string;
-        /** file to upload */
-        file?: File;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<ApiResponse, any>({
+    uploadFile: (petId: number, data: IMySuperPrefixUploadFilePayloadMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixApiResponseMySuperSuffix, any>({
         path: `/pet/${petId}/uploadImage`,
         method: "POST",
         body: data,
@@ -640,8 +647,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Place an order for a pet
      * @request POST:/store/order
      */
-    placeOrder: (body: Order, params: RequestParams = {}) =>
-      this.request<Order, void>({
+    placeOrder: (body: IMySuperPrefixOrderMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixOrderMySuperSuffix, void>({
         path: `/store/order`,
         method: "POST",
         body: body,
@@ -659,7 +666,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/store/order/{orderId}
      */
     getOrderById: (orderId: number, params: RequestParams = {}) =>
-      this.request<Order, void>({
+      this.request<IMySuperPrefixOrderMySuperSuffix, void>({
         path: `/store/order/${orderId}`,
         method: "GET",
         format: "json",
@@ -690,7 +697,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Create user
      * @request POST:/user
      */
-    createUser: (body: User, params: RequestParams = {}) =>
+    createUser: (body: IMySuperPrefixUserMySuperSuffix, params: RequestParams = {}) =>
       this.request<any, void>({
         path: `/user`,
         method: "POST",
@@ -707,7 +714,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Creates list of users with given input array
      * @request POST:/user/createWithArray
      */
-    createUsersWithArrayInput: (body: User[], params: RequestParams = {}) =>
+    createUsersWithArrayInput: (body: IMySuperPrefixUserMySuperSuffix[], params: RequestParams = {}) =>
       this.request<any, void>({
         path: `/user/createWithArray`,
         method: "POST",
@@ -724,7 +731,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Creates list of users with given input array
      * @request POST:/user/createWithList
      */
-    createUsersWithListInput: (body: User[], params: RequestParams = {}) =>
+    createUsersWithListInput: (body: IMySuperPrefixUserMySuperSuffix[], params: RequestParams = {}) =>
       this.request<any, void>({
         path: `/user/createWithList`,
         method: "POST",
@@ -741,16 +748,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Logs user into the system
      * @request GET:/user/login
      */
-    loginUser: (
-      query: {
-        /** The user name for login */
-        username: string;
-        /** The password for login in clear text */
-        password: string;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<Currency, void>({
+    loginUser: (query: IMySuperPrefixLoginUserParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixCurrencyMySuperSuffix, void>({
         path: `/user/login`,
         method: "GET",
         query: query,
@@ -782,7 +781,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/user/{username}
      */
     getUserByName: (username: string, params: RequestParams = {}) =>
-      this.request<User, void>({
+      this.request<IMySuperPrefixUserMySuperSuffix, void>({
         path: `/user/${username}`,
         method: "GET",
         format: "json",
@@ -797,7 +796,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Updated user
      * @request PUT:/user/{username}
      */
-    updateUser: (username: string, body: User, params: RequestParams = {}) =>
+    updateUser: (username: string, body: IMySuperPrefixUserMySuperSuffix, params: RequestParams = {}) =>
       this.request<any, void>({
         path: `/user/${username}`,
         method: "PUT",

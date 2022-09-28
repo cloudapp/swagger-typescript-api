@@ -9,7 +9,7 @@
  * ---------------------------------------------------------------
  */
 
-export type Test = {
+export type IMySuperPrefixTestMySuperSuffix = {
   x?: "A-B"[];
 } & {
   y?: string;

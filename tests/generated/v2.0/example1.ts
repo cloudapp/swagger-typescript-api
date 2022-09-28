@@ -13,12 +13,23 @@
  * some description
  * @pattern ^[A-Z]{3,3}$
  */
-export type Currency = string;
+export type IMySuperPrefixCurrencyMySuperSuffix = string;
+
+export interface IMySuperPrefixManagedInstanceTdeCertificatesCreateParamsMySuperSuffix {
+  /** The API version to use for the request. */
+  "api-version": string;
+  /** The name of the resource group that contains the resource. You can obtain this value from the Azure Resource Manager API or the portal. */
+  resourceGroupName: string;
+  /** The name of the managed instance. */
+  managedInstanceName: string;
+  /** The subscription ID that identifies an Azure subscription. */
+  subscriptionId: string;
+}
 
 /**
  * A TDE certificate that can be uploaded into a server.
  */
-export type TdeCertificate = {
+export type IMySuperPrefixTdeCertificateMySuperSuffix = {
   /** Resource ID. */
   id?: string;
   /** Resource name. */
@@ -27,13 +38,13 @@ export type TdeCertificate = {
   type?: string;
 } & {
   /** Resource properties. */
-  properties?: TdeCertificateProperties;
+  properties?: IMySuperPrefixTdeCertificatePropertiesMySuperSuffix;
 };
 
 /**
  * A TDE certificate that can be uploaded into a server.
  */
-export type TdeCertificate2 = {
+export type IMySuperPrefixTdeCertificate2MySuperSuffix = {
   /** Resource ID. */
   id?: string;
   /** Resource name. */
@@ -45,7 +56,7 @@ export type TdeCertificate2 = {
 /**
  * Properties of a TDE certificate.
  */
-export interface TdeCertificateProperties {
+export interface IMySuperPrefixTdeCertificatePropertiesMySuperSuffix {
   /** The certificate password. */
   certPassword?: string;
   /** The base64 encoded certificate private blob. */
@@ -277,14 +288,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.Sql/managedInstances/{managedInstanceName}/tdeCertificates
      */
     managedInstanceTdeCertificatesCreate: (
-      resourceGroupName: string,
-      managedInstanceName: string,
-      subscriptionId: string,
-      query: {
-        /** The API version to use for the request. */
-        "api-version": string;
-      },
-      parameters: TdeCertificate,
+      {
+        resourceGroupName,
+        managedInstanceName,
+        subscriptionId,
+        ...query
+      }: IMySuperPrefixManagedInstanceTdeCertificatesCreateParamsMySuperSuffix,
+      parameters: IMySuperPrefixTdeCertificateMySuperSuffix,
       params: RequestParams = {},
     ) =>
       this.request<void, void>({

@@ -52,7 +52,6 @@
   "typings": "./index.d.ts",
   "main": "src/index.js",
   "devDependencies": {
-    "@types/axios": "^0.14.0",
     "@types/lodash": "^4.14.182",
     "@types/node": "^15.0.2",
     "@types/prettier": "^2.7.0",

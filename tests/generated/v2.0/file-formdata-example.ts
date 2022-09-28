@@ -9,6 +9,16 @@
  * ---------------------------------------------------------------
  */
 
+export interface IMySuperPrefixUploadFilePayloadMySuperSuffix {
+  /**
+   * File description
+   * @format binary
+   */
+  file?: File;
+  /** Boolean flag */
+  someFlag?: boolean;
+}
+
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
@@ -231,18 +241,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Upload file
      * @request POST:/upload-file
      */
-    uploadFile: (
-      data: {
-        /**
-         * File description
-         * @format binary
-         */
-        file?: File;
-        /** Boolean flag */
-        someFlag?: boolean;
-      },
-      params: RequestParams = {},
-    ) =>
+    uploadFile: (data: IMySuperPrefixUploadFilePayloadMySuperSuffix, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/upload-file`,
         method: "POST",

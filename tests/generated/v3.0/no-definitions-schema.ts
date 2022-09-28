@@ -9,7 +9,7 @@
  * ---------------------------------------------------------------
  */
 
-export interface BasicErrorModel {
+export interface IMySuperPrefixBasicErrorModelMySuperSuffix {
   /**
    * @min 100
    * @max 600
@@ -19,7 +19,7 @@ export interface BasicErrorModel {
   message: string;
 }
 
-export type ExtendedErrorModel = BasicErrorModel & {
+export type IMySuperPrefixExtendedErrorModelMySuperSuffix = IMySuperPrefixBasicErrorModelMySuperSuffix & {
   rootCause: string;
 };
 

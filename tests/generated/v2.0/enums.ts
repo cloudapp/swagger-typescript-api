@@ -12,7 +12,7 @@
 /**
  * @format int32
  */
-export enum EmptyEnum {
+export enum IMySuperPrefixEmptyEnumMySuperSuffix {
   Bla = "Bla",
   Blabla = "Blabla",
   Boiler = "Boiler",
@@ -21,13 +21,13 @@ export enum EmptyEnum {
 /**
  * @format int32
  */
-export enum EnumWithMoreNames {
+export enum IMySuperPrefixEnumWithMoreNamesMySuperSuffix {
   Bla = 1,
   Blabla = "Blabla",
   Boiler = "Boiler",
 }
 
-export enum OnlyEnumNames {
+export enum IMySuperPrefixOnlyEnumNamesMySuperSuffix {
   Bla = "Bla",
   Blabla = "Blabla",
   Boiler = "Boiler",
@@ -36,7 +36,7 @@ export enum OnlyEnumNames {
 /**
  * @format int32
  */
-export enum SomeInterestEnum {
+export enum IMySuperPrefixSomeInterestEnumMySuperSuffix {
   Bla = 6,
   Blabla = 2,
   Boiler = 1,
@@ -56,19 +56,19 @@ export enum SomeInterestEnum {
   HSDFDS = "HSDFDS",
 }
 
-export enum StringCompleteEnums {
+export enum IMySuperPrefixStringCompleteEnumsMySuperSuffix {
   Bla = "foo",
   Blabla = "bar",
   Boiler = "baz",
 }
 
-export enum StringEnums {
+export enum IMySuperPrefixStringEnumsMySuperSuffix {
   Bla = "foo",
   Blabla = "bar",
   Boiler = "Boiler",
 }
 
-export enum StringOnlyEnumNames {
+export enum IMySuperPrefixStringOnlyEnumNamesMySuperSuffix {
   Bla = "Bla",
   Blabla = "Blabla",
   Boiler = "Boiler",

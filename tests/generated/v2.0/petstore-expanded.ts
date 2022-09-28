@@ -9,13 +9,23 @@
  * ---------------------------------------------------------------
  */
 
-export interface Error {
+export interface IMySuperPrefixErrorMySuperSuffix {
   /** @format int32 */
   code: number;
   message: string;
 }
 
-export interface NewPet {
+export interface IMySuperPrefixFindPetsParamsMySuperSuffix {
+  /** tags to filter by */
+  tags?: string[];
+  /**
+   * maximum number of results to return
+   * @format int32
+   */
+  limit?: number;
+}
+
+export interface IMySuperPrefixNewPetMySuperSuffix {
   name: string;
   tag?: string;
 }
@@ -23,7 +33,7 @@ export interface NewPet {
 /**
  * Page«TemplateResponseDto»
  */
-export interface PageTemplateResponseDto {
+export interface IMySuperPrefixPageTemplateResponseDtoMySuperSuffix {
   content?: any[];
   empty?: boolean;
   first?: boolean;
@@ -42,7 +52,7 @@ export interface PageTemplateResponseDto {
   totalPages?: number;
 }
 
-export type Pet = NewPet & {
+export type IMySuperPrefixPetMySuperSuffix = IMySuperPrefixNewPetMySuperSuffix & {
   /** @format int64 */
   id: number;
 };
@@ -287,19 +297,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name FindPets
      * @request GET:/pets
      */
-    findPets: (
-      query?: {
-        /** tags to filter by */
-        tags?: string[];
-        /**
-         * maximum number of results to return
-         * @format int32
-         */
-        limit?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<Pet[], Error>({
+    findPets: (query: IMySuperPrefixFindPetsParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixPetMySuperSuffix[], IMySuperPrefixErrorMySuperSuffix>({
         path: `/pets`,
         method: "GET",
         query: query,
@@ -313,8 +312,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name AddPet
      * @request POST:/pets
      */
-    addPet: (pet: NewPet, params: RequestParams = {}) =>
-      this.request<Pet, Error>({
+    addPet: (pet: IMySuperPrefixNewPetMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixPetMySuperSuffix, IMySuperPrefixErrorMySuperSuffix>({
         path: `/pets`,
         method: "POST",
         body: pet,
@@ -330,7 +329,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/pets/{id}
      */
     findPetById: (id: number, params: RequestParams = {}) =>
-      this.request<Pet, Error>({
+      this.request<IMySuperPrefixPetMySuperSuffix, IMySuperPrefixErrorMySuperSuffix>({
         path: `/pets/${id}`,
         method: "GET",
         format: "json",
@@ -344,7 +343,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request DELETE:/pets/{id}
      */
     deletePet: (id: number, params: RequestParams = {}) =>
-      this.request<void, Error>({
+      this.request<void, IMySuperPrefixErrorMySuperSuffix>({
         path: `/pets/${id}`,
         method: "DELETE",
         ...params,

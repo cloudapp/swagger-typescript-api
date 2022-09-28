@@ -9,6 +9,17 @@
  * ---------------------------------------------------------------
  */
 
+export interface IMySuperPrefixStreamsCreateParamsMySuperSuffix {
+  /**
+   * the location where data will be sent.  Must be network accessible
+   * by the source server
+   *
+   * @format uri
+   * @example https://tonys-server.com
+   */
+  callbackUrl: string;
+}
+
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
 
@@ -229,19 +240,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name StreamsCreate
      * @request POST:/streams
      */
-    streamsCreate: (
-      query: {
-        /**
-         * the location where data will be sent.  Must be network accessible
-         * by the source server
-         *
-         * @format uri
-         * @example https://tonys-server.com
-         */
-        callbackUrl: string;
-      },
-      params: RequestParams = {},
-    ) =>
+    streamsCreate: (query: IMySuperPrefixStreamsCreateParamsMySuperSuffix, params: RequestParams = {}) =>
       this.request<
         {
           /**

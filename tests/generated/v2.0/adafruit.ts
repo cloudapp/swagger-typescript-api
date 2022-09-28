@@ -9,7 +9,7 @@
  * ---------------------------------------------------------------
  */
 
-export interface Activity {
+export interface IMySuperPrefixActivityMySuperSuffix {
   action?: string;
   /** @format dateTime */
   created_at?: string;
@@ -21,8 +21,73 @@ export interface Activity {
   user_id?: number;
 }
 
-export interface Block {
-  block_feeds?: BlockFeed[];
+export interface IMySuperPrefixAddFeedToGroupParamsMySuperSuffix {
+  feed_key?: string;
+  groupKey: string;
+  /** a valid username string */
+  username: string;
+}
+
+export interface IMySuperPrefixAllActivitiesParamsMySuperSuffix {
+  /**
+   * Start time for filtering, returns records created after given time.
+   * @format date-time
+   */
+  start_time?: string;
+  /**
+   * End time for filtering, returns records created before give time.
+   * @format date-time
+   */
+  end_time?: string;
+  /** Limit the number of records returned. */
+  limit?: number;
+  /** a valid username string */
+  username: string;
+}
+
+export interface IMySuperPrefixAllDataParamsMySuperSuffix {
+  /**
+   * Start time for filtering, returns records created after given time.
+   * @format date-time
+   */
+  start_time?: string;
+  /**
+   * End time for filtering, returns records created before give time.
+   * @format date-time
+   */
+  end_time?: string;
+  /** Limit the number of records returned. */
+  limit?: number;
+  /** List of Data record fields to include in response as comma separated list. Acceptable values are: `value`, `lat`, `lon`, `ele`, `id`, and `created_at`.  */
+  include?: string;
+  /** a valid username string */
+  username: string;
+  /** a valid feed key */
+  feedKey: string;
+}
+
+export interface IMySuperPrefixAllGroupFeedDataParamsMySuperSuffix {
+  /**
+   * Start time for filtering data. Returns data created after given time.
+   * @format date-time
+   */
+  start_time?: string;
+  /**
+   * End time for filtering data. Returns data created before give time.
+   * @format date-time
+   */
+  end_time?: string;
+  /** Limit the number of records returned. */
+  limit?: number;
+  /** a valid username string */
+  username: string;
+  groupKey: string;
+  /** a valid feed key */
+  feedKey: string;
+}
+
+export interface IMySuperPrefixBlockMySuperSuffix {
+  block_feeds?: IMySuperPrefixBlockFeedMySuperSuffix[];
   column?: number;
   description?: string;
   key?: string;
@@ -33,20 +98,73 @@ export interface Block {
   visual_type?: string;
 }
 
-export interface BlockFeed {
-  feed?: Feed;
-  group?: Group;
+export interface IMySuperPrefixBlockFeedMySuperSuffix {
+  feed?: IMySuperPrefixFeedMySuperSuffix;
+  group?: IMySuperPrefixGroupMySuperSuffix;
   id?: string;
 }
 
-export interface Dashboard {
-  blocks?: Block[];
+export interface IMySuperPrefixChartDataParamsMySuperSuffix {
+  /**
+   * Start time for filtering, returns records created after given time.
+   * @format date-time
+   */
+  start_time?: string;
+  /**
+   * End time for filtering, returns records created before give time.
+   * @format date-time
+   */
+  end_time?: string;
+  /**
+   * A resolution size in minutes. By giving a resolution value you will get back grouped data points aggregated over resolution-sized intervals. NOTE: time span is preferred over resolution, so if you request a span of time that includes more than max limit points you may get a larger resolution than you requested. Valid resolutions are 1, 5, 10, 30, 60, and 120.
+   * @format int32
+   */
+  resolution?: number;
+  /**
+   * The number of hours the chart should cover.
+   * @format int32
+   */
+  hours?: number;
+  /** a valid username string */
+  username: string;
+  /** a valid feed key */
+  feedKey: string;
+}
+
+export interface IMySuperPrefixCreateFeedParamsMySuperSuffix {
+  group_key?: string;
+  /** a valid username string */
+  username: string;
+}
+
+export interface IMySuperPrefixCreateGroupDataPayloadMySuperSuffix {
+  /** Optional created_at timestamp which will be applied to all feed values created. */
+  created_at?: string;
+  /** An array of feed data records with `key` and `value` properties. */
+  feeds: {
+    key: string;
+    value: string;
+  }[];
+  /** A location record with `lat`, `lon`, and [optional] `ele` properties. */
+  location?: {
+    ele?: number;
+    lat: number;
+    lon: number;
+  };
+}
+
+export interface IMySuperPrefixCreateWebhookFeedDataPayloadMySuperSuffix {
+  value?: string;
+}
+
+export interface IMySuperPrefixDashboardMySuperSuffix {
+  blocks?: IMySuperPrefixBlockMySuperSuffix[];
   description?: string;
   key?: string;
   name?: string;
 }
 
-export interface Data {
+export interface IMySuperPrefixDataMySuperSuffix {
   completed_at?: string;
   created_at?: string;
   created_epoch?: number;
@@ -61,7 +179,7 @@ export interface Data {
   value?: string;
 }
 
-export interface DataResponse {
+export interface IMySuperPrefixDataResponseMySuperSuffix {
   completed_at?: string;
   created_at?: string;
   created_epoch?: number;
@@ -76,12 +194,12 @@ export interface DataResponse {
   value?: string;
 }
 
-export interface Error {
+export interface IMySuperPrefixErrorMySuperSuffix {
   code?: string;
   message?: string;
 }
 
-export interface Feed {
+export interface IMySuperPrefixFeedMySuperSuffix {
   created_at?: string;
   description?: string;
   /** Additional details about this feed. */
@@ -89,15 +207,15 @@ export interface Feed {
     data?: {
       /** Number of data points stored by this feed. */
       count?: number;
-      first?: Record<string, Data>;
-      last?: Record<string, Data>;
+      first?: Record<string, IMySuperPrefixDataMySuperSuffix>;
+      last?: Record<string, IMySuperPrefixDataMySuperSuffix>;
     };
     /** Access control list for this feed */
     shared_with?: object[];
   };
   enabled?: boolean;
-  group?: Record<string, ShallowGroup>;
-  groups?: ShallowGroup[];
+  group?: Record<string, IMySuperPrefixShallowGroupMySuperSuffix>;
+  groups?: IMySuperPrefixShallowGroupMySuperSuffix[];
   history?: boolean;
   id?: number;
   key?: string;
@@ -115,16 +233,71 @@ export interface Feed {
   visibility?: "private" | "public" | "in progress" | "out of access";
 }
 
-export interface Group {
+export interface IMySuperPrefixFirstDataParamsMySuperSuffix {
+  /** List of Data record fields to include in response as comma separated list. Acceptable values are: `value`, `lat`, `lon`, `ele`, `id`, and `created_at`.  */
+  include?: string;
+  /** a valid username string */
+  username: string;
+  /** a valid feed key */
+  feedKey: string;
+}
+
+export interface IMySuperPrefixGetActivityParamsMySuperSuffix {
+  /**
+   * Start time for filtering, returns records created after given time.
+   * @format date-time
+   */
+  start_time?: string;
+  /**
+   * End time for filtering, returns records created before give time.
+   * @format date-time
+   */
+  end_time?: string;
+  /** Limit the number of records returned. */
+  limit?: number;
+  /** a valid username string */
+  username: string;
+  type: string;
+}
+
+export interface IMySuperPrefixGetDataParamsMySuperSuffix {
+  /** List of Data record fields to include in response as comma separated list. Acceptable values are: `value`, `lat`, `lon`, `ele`, `id`, and `created_at`.  */
+  include?: string;
+  /** a valid username string */
+  username: string;
+  /** a valid feed key */
+  feedKey: string;
+  id: string;
+}
+
+export interface IMySuperPrefixGroupMySuperSuffix {
   created_at?: string;
   description?: string;
-  feeds?: Feed[];
+  feeds?: IMySuperPrefixFeedMySuperSuffix[];
   id?: number;
   name?: string;
   updated_at?: string;
 }
 
-export interface Permission {
+export interface IMySuperPrefixLastDataParamsMySuperSuffix {
+  /** List of Data record fields to include in response as comma separated list. Acceptable values are: `value`, `lat`, `lon`, `ele`, `id`, and `created_at`.  */
+  include?: string;
+  /** a valid username string */
+  username: string;
+  /** a valid feed key */
+  feedKey: string;
+}
+
+export interface IMySuperPrefixNextDataParamsMySuperSuffix {
+  /** List of Data record fields to include in response as comma separated list. Acceptable values are: `value`, `lat`, `lon`, `ele`, `id`, and `created_at`.  */
+  include?: string;
+  /** a valid username string */
+  username: string;
+  /** a valid feed key */
+  feedKey: string;
+}
+
+export interface IMySuperPrefixPermissionMySuperSuffix {
   created_at?: string;
   id?: number;
   model?: "feed" | "group" | "dashboard";
@@ -135,7 +308,23 @@ export interface Permission {
   user_id?: number;
 }
 
-export interface ShallowGroup {
+export interface IMySuperPrefixPreviousDataParamsMySuperSuffix {
+  /** List of Data record fields to include in response as comma separated list. Acceptable values are: `value`, `lat`, `lon`, `ele`, `id`, and `created_at`.  */
+  include?: string;
+  /** a valid username string */
+  username: string;
+  /** a valid feed key */
+  feedKey: string;
+}
+
+export interface IMySuperPrefixRemoveFeedFromGroupParamsMySuperSuffix {
+  feed_key?: string;
+  groupKey: string;
+  /** a valid username string */
+  username: string;
+}
+
+export interface IMySuperPrefixShallowGroupMySuperSuffix {
   created_at?: string;
   description?: string;
   id?: number;
@@ -143,15 +332,15 @@ export interface ShallowGroup {
   updated_at?: string;
 }
 
-export interface Token {
+export interface IMySuperPrefixTokenMySuperSuffix {
   token?: string;
 }
 
-export interface Trigger {
+export interface IMySuperPrefixTriggerMySuperSuffix {
   name?: string;
 }
 
-export interface User {
+export interface IMySuperPrefixUserMySuperSuffix {
   color?: string;
   /** @format dateTime */
   created_at?: string;
@@ -510,7 +699,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     currentUser: (params: RequestParams = {}) =>
-      this.request<User, void>({
+      this.request<IMySuperPrefixUserMySuperSuffix, void>({
         path: `/user`,
         method: "GET",
         secure: true,
@@ -530,12 +719,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      */
     createWebhookFeedData: (
       token: string,
-      payload: {
-        value?: string;
-      },
+      payload: IMySuperPrefixCreateWebhookFeedDataPayloadMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<Data, void>({
+      this.request<IMySuperPrefixDataMySuperSuffix, void>({
         path: `/webhooks/feed/${token}`,
         method: "POST",
         body: payload,
@@ -555,7 +742,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     createRawWebhookFeedData: (token: string, params: RequestParams = {}) =>
-      this.request<Data, void>({
+      this.request<IMySuperPrefixDataMySuperSuffix, void>({
         path: `/webhooks/feed/${token}/raw`,
         method: "POST",
         secure: true,
@@ -592,24 +779,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     allActivities: (
-      username: string,
-      query?: {
-        /**
-         * Start time for filtering, returns records created after given time.
-         * @format date-time
-         */
-        start_time?: string;
-        /**
-         * End time for filtering, returns records created before give time.
-         * @format date-time
-         */
-        end_time?: string;
-        /** Limit the number of records returned. */
-        limit?: number;
-      },
+      { username, ...query }: IMySuperPrefixAllActivitiesParamsMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<Activity[], void>({
+      this.request<IMySuperPrefixActivityMySuperSuffix[], void>({
         path: `/${username}/activities`,
         method: "GET",
         query: query,
@@ -628,25 +801,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getActivity: (
-      username: string,
-      type: string,
-      query?: {
-        /**
-         * Start time for filtering, returns records created after given time.
-         * @format date-time
-         */
-        start_time?: string;
-        /**
-         * End time for filtering, returns records created before give time.
-         * @format date-time
-         */
-        end_time?: string;
-        /** Limit the number of records returned. */
-        limit?: number;
-      },
+      { username, type, ...query }: IMySuperPrefixGetActivityParamsMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<Activity[], void>({
+      this.request<IMySuperPrefixActivityMySuperSuffix[], void>({
         path: `/${username}/activities/${type}`,
         method: "GET",
         query: query,
@@ -665,7 +823,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     allDashboards: (username: string, params: RequestParams = {}) =>
-      this.request<Dashboard[], void>({
+      this.request<IMySuperPrefixDashboardMySuperSuffix[], void>({
         path: `/${username}/dashboards`,
         method: "GET",
         secure: true,
@@ -682,8 +840,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/{username}/dashboards
      * @secure
      */
-    createDashboard: (username: string, dashboard: Dashboard, params: RequestParams = {}) =>
-      this.request<Dashboard, void>({
+    createDashboard: (username: string, dashboard: IMySuperPrefixDashboardMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixDashboardMySuperSuffix, void>({
         path: `/${username}/dashboards`,
         method: "POST",
         body: dashboard,
@@ -703,7 +861,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     allBlocks: (username: string, dashboardId: string, params: RequestParams = {}) =>
-      this.request<Block[], void>({
+      this.request<IMySuperPrefixBlockMySuperSuffix[], void>({
         path: `/${username}/dashboards/${dashboardId}/blocks`,
         method: "GET",
         secure: true,
@@ -720,8 +878,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/{username}/dashboards/{dashboard_id}/blocks
      * @secure
      */
-    createBlock: (username: string, dashboardId: string, block: Block, params: RequestParams = {}) =>
-      this.request<Block, void>({
+    createBlock: (
+      username: string,
+      dashboardId: string,
+      block: IMySuperPrefixBlockMySuperSuffix,
+      params: RequestParams = {},
+    ) =>
+      this.request<IMySuperPrefixBlockMySuperSuffix, void>({
         path: `/${username}/dashboards/${dashboardId}/blocks`,
         method: "POST",
         body: block,
@@ -759,7 +922,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getBlock: (username: string, dashboardId: string, id: string, params: RequestParams = {}) =>
-      this.request<Block, void>({
+      this.request<IMySuperPrefixBlockMySuperSuffix, void>({
         path: `/${username}/dashboards/${dashboardId}/blocks/${id}`,
         method: "GET",
         secure: true,
@@ -798,7 +961,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Block, void>({
+      this.request<IMySuperPrefixBlockMySuperSuffix, void>({
         path: `/${username}/dashboards/${dashboardId}/blocks/${id}`,
         method: "PATCH",
         body: block,
@@ -839,7 +1002,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Block, void>({
+      this.request<IMySuperPrefixBlockMySuperSuffix, void>({
         path: `/${username}/dashboards/${dashboardId}/blocks/${id}`,
         method: "PUT",
         body: block,
@@ -877,7 +1040,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getDashboard: (username: string, id: string, params: RequestParams = {}) =>
-      this.request<Dashboard, void>({
+      this.request<IMySuperPrefixDashboardMySuperSuffix, void>({
         path: `/${username}/dashboards/${id}`,
         method: "GET",
         secure: true,
@@ -904,7 +1067,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Dashboard, void>({
+      this.request<IMySuperPrefixDashboardMySuperSuffix, void>({
         path: `/${username}/dashboards/${id}`,
         method: "PATCH",
         body: dashboard,
@@ -933,7 +1096,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Dashboard, void>({
+      this.request<IMySuperPrefixDashboardMySuperSuffix, void>({
         path: `/${username}/dashboards/${id}`,
         method: "PUT",
         body: dashboard,
@@ -953,7 +1116,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     allFeeds: (username: string, params: RequestParams = {}) =>
-      this.request<Feed[], void>({
+      this.request<IMySuperPrefixFeedMySuperSuffix[], void>({
         path: `/${username}/feeds`,
         method: "GET",
         secure: true,
@@ -971,14 +1134,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     createFeed: (
-      username: string,
-      feed: Feed,
-      query?: {
-        group_key?: string;
-      },
+      { username, ...query }: IMySuperPrefixCreateFeedParamsMySuperSuffix,
+      feed: IMySuperPrefixFeedMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<Feed, void>({
+      this.request<IMySuperPrefixFeedMySuperSuffix, void>({
         path: `/${username}/feeds`,
         method: "POST",
         query: query,
@@ -1016,7 +1176,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getFeed: (username: string, feedKey: string, params: RequestParams = {}) =>
-      this.request<Feed, void>({
+      this.request<IMySuperPrefixFeedMySuperSuffix, void>({
         path: `/${username}/feeds/${feedKey}`,
         method: "GET",
         secure: true,
@@ -1044,7 +1204,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Feed, void>({
+      this.request<IMySuperPrefixFeedMySuperSuffix, void>({
         path: `/${username}/feeds/${feedKey}`,
         method: "PATCH",
         body: feed,
@@ -1074,7 +1234,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Feed, void>({
+      this.request<IMySuperPrefixFeedMySuperSuffix, void>({
         path: `/${username}/feeds/${feedKey}`,
         method: "PUT",
         body: feed,
@@ -1093,28 +1253,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/{username}/feeds/{feed_key}/data
      * @secure
      */
-    allData: (
-      username: string,
-      feedKey: string,
-      query?: {
-        /**
-         * Start time for filtering, returns records created after given time.
-         * @format date-time
-         */
-        start_time?: string;
-        /**
-         * End time for filtering, returns records created before give time.
-         * @format date-time
-         */
-        end_time?: string;
-        /** Limit the number of records returned. */
-        limit?: number;
-        /** List of Data record fields to include in response as comma separated list. Acceptable values are: `value`, `lat`, `lon`, `ele`, `id`, and `created_at`.  */
-        include?: string;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<DataResponse[], void>({
+    allData: ({ username, feedKey, ...query }: IMySuperPrefixAllDataParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixDataResponseMySuperSuffix[], void>({
         path: `/${username}/feeds/${feedKey}/data`,
         method: "GET",
         query: query,
@@ -1146,7 +1286,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Data, void>({
+      this.request<IMySuperPrefixDataMySuperSuffix, void>({
         path: `/${username}/feeds/${feedKey}/data`,
         method: "POST",
         body: datum,
@@ -1165,8 +1305,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/{username}/feeds/{feed_key}/data/batch
      * @secure
      */
-    batchCreateData: (username: string, feedKey: string, data: Data, params: RequestParams = {}) =>
-      this.request<DataResponse[], void>({
+    batchCreateData: (
+      username: string,
+      feedKey: string,
+      data: IMySuperPrefixDataMySuperSuffix,
+      params: RequestParams = {},
+    ) =>
+      this.request<IMySuperPrefixDataResponseMySuperSuffix[], void>({
         path: `/${username}/feeds/${feedKey}/data/batch`,
         method: "POST",
         body: data,
@@ -1186,30 +1331,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     chartData: (
-      username: string,
-      feedKey: string,
-      query?: {
-        /**
-         * Start time for filtering, returns records created after given time.
-         * @format date-time
-         */
-        start_time?: string;
-        /**
-         * End time for filtering, returns records created before give time.
-         * @format date-time
-         */
-        end_time?: string;
-        /**
-         * A resolution size in minutes. By giving a resolution value you will get back grouped data points aggregated over resolution-sized intervals. NOTE: time span is preferred over resolution, so if you request a span of time that includes more than max limit points you may get a larger resolution than you requested. Valid resolutions are 1, 5, 10, 30, 60, and 120.
-         * @format int32
-         */
-        resolution?: number;
-        /**
-         * The number of hours the chart should cover.
-         * @format int32
-         */
-        hours?: number;
-      },
+      { username, feedKey, ...query }: IMySuperPrefixChartDataParamsMySuperSuffix,
       params: RequestParams = {},
     ) =>
       this.request<
@@ -1245,15 +1367,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     firstData: (
-      username: string,
-      feedKey: string,
-      query?: {
-        /** List of Data record fields to include in response as comma separated list. Acceptable values are: `value`, `lat`, `lon`, `ele`, `id`, and `created_at`.  */
-        include?: string;
-      },
+      { username, feedKey, ...query }: IMySuperPrefixFirstDataParamsMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<DataResponse, void>({
+      this.request<IMySuperPrefixDataResponseMySuperSuffix, void>({
         path: `/${username}/feeds/${feedKey}/data/first`,
         method: "GET",
         query: query,
@@ -1273,15 +1390,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     lastData: (
-      username: string,
-      feedKey: string,
-      query?: {
-        /** List of Data record fields to include in response as comma separated list. Acceptable values are: `value`, `lat`, `lon`, `ele`, `id`, and `created_at`.  */
-        include?: string;
-      },
+      { username, feedKey, ...query }: IMySuperPrefixLastDataParamsMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<DataResponse, void>({
+      this.request<IMySuperPrefixDataResponseMySuperSuffix, void>({
         path: `/${username}/feeds/${feedKey}/data/last`,
         method: "GET",
         query: query,
@@ -1301,15 +1413,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     nextData: (
-      username: string,
-      feedKey: string,
-      query?: {
-        /** List of Data record fields to include in response as comma separated list. Acceptable values are: `value`, `lat`, `lon`, `ele`, `id`, and `created_at`.  */
-        include?: string;
-      },
+      { username, feedKey, ...query }: IMySuperPrefixNextDataParamsMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<DataResponse, void>({
+      this.request<IMySuperPrefixDataResponseMySuperSuffix, void>({
         path: `/${username}/feeds/${feedKey}/data/next`,
         method: "GET",
         query: query,
@@ -1329,15 +1436,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     previousData: (
-      username: string,
-      feedKey: string,
-      query?: {
-        /** List of Data record fields to include in response as comma separated list. Acceptable values are: `value`, `lat`, `lon`, `ele`, `id`, and `created_at`.  */
-        include?: string;
-      },
+      { username, feedKey, ...query }: IMySuperPrefixPreviousDataParamsMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<DataResponse, void>({
+      this.request<IMySuperPrefixDataResponseMySuperSuffix, void>({
         path: `/${username}/feeds/${feedKey}/data/previous`,
         method: "GET",
         query: query,
@@ -1393,16 +1495,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getData: (
-      username: string,
-      feedKey: string,
-      id: string,
-      query?: {
-        /** List of Data record fields to include in response as comma separated list. Acceptable values are: `value`, `lat`, `lon`, `ele`, `id`, and `created_at`.  */
-        include?: string;
-      },
+      { username, feedKey, id, ...query }: IMySuperPrefixGetDataParamsMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<DataResponse, void>({
+      this.request<IMySuperPrefixDataResponseMySuperSuffix, void>({
         path: `/${username}/feeds/${feedKey}/data/${id}`,
         method: "GET",
         query: query,
@@ -1435,7 +1531,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<DataResponse, void>({
+      this.request<IMySuperPrefixDataResponseMySuperSuffix, void>({
         path: `/${username}/feeds/${feedKey}/data/${id}`,
         method: "PATCH",
         body: datum,
@@ -1469,7 +1565,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<DataResponse, void>({
+      this.request<IMySuperPrefixDataResponseMySuperSuffix, void>({
         path: `/${username}/feeds/${feedKey}/data/${id}`,
         method: "PUT",
         body: datum,
@@ -1489,7 +1585,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getFeedDetails: (username: string, feedKey: string, params: RequestParams = {}) =>
-      this.request<Feed, void>({
+      this.request<IMySuperPrefixFeedMySuperSuffix, void>({
         path: `/${username}/feeds/${feedKey}/details`,
         method: "GET",
         secure: true,
@@ -1507,7 +1603,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     allGroups: (username: string, params: RequestParams = {}) =>
-      this.request<Group[], void>({
+      this.request<IMySuperPrefixGroupMySuperSuffix[], void>({
         path: `/${username}/groups`,
         method: "GET",
         secure: true,
@@ -1524,8 +1620,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/{username}/groups
      * @secure
      */
-    createGroup: (username: string, group: Group, params: RequestParams = {}) =>
-      this.request<Group, void>({
+    createGroup: (username: string, group: IMySuperPrefixGroupMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixGroupMySuperSuffix, void>({
         path: `/${username}/groups`,
         method: "POST",
         body: group,
@@ -1563,7 +1659,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getGroup: (username: string, groupKey: string, params: RequestParams = {}) =>
-      this.request<Group, void>({
+      this.request<IMySuperPrefixGroupMySuperSuffix, void>({
         path: `/${username}/groups/${groupKey}`,
         method: "GET",
         secure: true,
@@ -1590,7 +1686,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Group, void>({
+      this.request<IMySuperPrefixGroupMySuperSuffix, void>({
         path: `/${username}/groups/${groupKey}`,
         method: "PATCH",
         body: group,
@@ -1619,7 +1715,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Group, void>({
+      this.request<IMySuperPrefixGroupMySuperSuffix, void>({
         path: `/${username}/groups/${groupKey}`,
         method: "PUT",
         body: group,
@@ -1639,14 +1735,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     addFeedToGroup: (
-      groupKey: string,
-      username: string,
-      query?: {
-        feed_key?: string;
-      },
+      { groupKey, username, ...query }: IMySuperPrefixAddFeedToGroupParamsMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<Group, void>({
+      this.request<IMySuperPrefixGroupMySuperSuffix, void>({
         path: `/${username}/groups/${groupKey}/add`,
         method: "POST",
         query: query,
@@ -1667,24 +1759,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     createGroupData: (
       username: string,
       groupKey: string,
-      group_feed_data: {
-        /** Optional created_at timestamp which will be applied to all feed values created. */
-        created_at?: string;
-        /** An array of feed data records with `key` and `value` properties. */
-        feeds: {
-          key: string;
-          value: string;
-        }[];
-        /** A location record with `lat`, `lon`, and [optional] `ele` properties. */
-        location?: {
-          ele?: number;
-          lat: number;
-          lon: number;
-        };
-      },
+      group_feed_data: IMySuperPrefixCreateGroupDataPayloadMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<DataResponse[], void>({
+      this.request<IMySuperPrefixDataResponseMySuperSuffix[], void>({
         path: `/${username}/groups/${groupKey}/data`,
         method: "POST",
         body: group_feed_data,
@@ -1704,7 +1782,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     allGroupFeeds: (groupKey: string, username: string, params: RequestParams = {}) =>
-      this.request<Feed[], void>({
+      this.request<IMySuperPrefixFeedMySuperSuffix[], void>({
         path: `/${username}/groups/${groupKey}/feeds`,
         method: "GET",
         secure: true,
@@ -1732,7 +1810,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Feed, void>({
+      this.request<IMySuperPrefixFeedMySuperSuffix, void>({
         path: `/${username}/groups/${groupKey}/feeds`,
         method: "POST",
         body: feed,
@@ -1752,26 +1830,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     allGroupFeedData: (
-      username: string,
-      groupKey: string,
-      feedKey: string,
-      query?: {
-        /**
-         * Start time for filtering data. Returns data created after given time.
-         * @format date-time
-         */
-        start_time?: string;
-        /**
-         * End time for filtering data. Returns data created before give time.
-         * @format date-time
-         */
-        end_time?: string;
-        /** Limit the number of records returned. */
-        limit?: number;
-      },
+      { username, groupKey, feedKey, ...query }: IMySuperPrefixAllGroupFeedDataParamsMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<DataResponse[], void>({
+      this.request<IMySuperPrefixDataResponseMySuperSuffix[], void>({
         path: `/${username}/groups/${groupKey}/feeds/${feedKey}/data`,
         method: "GET",
         query: query,
@@ -1804,7 +1866,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<DataResponse, void>({
+      this.request<IMySuperPrefixDataResponseMySuperSuffix, void>({
         path: `/${username}/groups/${groupKey}/feeds/${feedKey}/data`,
         method: "POST",
         body: datum,
@@ -1838,7 +1900,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       }[],
       params: RequestParams = {},
     ) =>
-      this.request<DataResponse[], void>({
+      this.request<IMySuperPrefixDataResponseMySuperSuffix[], void>({
         path: `/${username}/groups/${groupKey}/feeds/${feedKey}/data/batch`,
         method: "POST",
         body: data,
@@ -1858,14 +1920,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     removeFeedFromGroup: (
-      groupKey: string,
-      username: string,
-      query?: {
-        feed_key?: string;
-      },
+      { groupKey, username, ...query }: IMySuperPrefixRemoveFeedFromGroupParamsMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<Group, void>({
+      this.request<IMySuperPrefixGroupMySuperSuffix, void>({
         path: `/${username}/groups/${groupKey}/remove`,
         method: "POST",
         query: query,
@@ -1910,7 +1968,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     allTokens: (username: string, params: RequestParams = {}) =>
-      this.request<Token[], void>({
+      this.request<IMySuperPrefixTokenMySuperSuffix[], void>({
         path: `/${username}/tokens`,
         method: "GET",
         secure: true,
@@ -1927,8 +1985,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/{username}/tokens
      * @secure
      */
-    createToken: (username: string, token: Token, params: RequestParams = {}) =>
-      this.request<Token, void>({
+    createToken: (username: string, token: IMySuperPrefixTokenMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixTokenMySuperSuffix, void>({
         path: `/${username}/tokens`,
         method: "POST",
         body: token,
@@ -1966,7 +2024,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getToken: (username: string, id: string, params: RequestParams = {}) =>
-      this.request<Token, void>({
+      this.request<IMySuperPrefixTokenMySuperSuffix, void>({
         path: `/${username}/tokens/${id}`,
         method: "GET",
         secure: true,
@@ -1991,7 +2049,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Token, void>({
+      this.request<IMySuperPrefixTokenMySuperSuffix, void>({
         path: `/${username}/tokens/${id}`,
         method: "PATCH",
         body: token,
@@ -2018,7 +2076,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Token, void>({
+      this.request<IMySuperPrefixTokenMySuperSuffix, void>({
         path: `/${username}/tokens/${id}`,
         method: "PUT",
         body: token,
@@ -2038,7 +2096,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     allTriggers: (username: string, params: RequestParams = {}) =>
-      this.request<Trigger[], void>({
+      this.request<IMySuperPrefixTriggerMySuperSuffix[], void>({
         path: `/${username}/triggers`,
         method: "GET",
         secure: true,
@@ -2055,8 +2113,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/{username}/triggers
      * @secure
      */
-    createTrigger: (username: string, trigger: Trigger, params: RequestParams = {}) =>
-      this.request<Trigger, void>({
+    createTrigger: (username: string, trigger: IMySuperPrefixTriggerMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixTriggerMySuperSuffix, void>({
         path: `/${username}/triggers`,
         method: "POST",
         body: trigger,
@@ -2094,7 +2152,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getTrigger: (username: string, id: string, params: RequestParams = {}) =>
-      this.request<Trigger, void>({
+      this.request<IMySuperPrefixTriggerMySuperSuffix, void>({
         path: `/${username}/triggers/${id}`,
         method: "GET",
         secure: true,
@@ -2119,7 +2177,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Trigger, void>({
+      this.request<IMySuperPrefixTriggerMySuperSuffix, void>({
         path: `/${username}/triggers/${id}`,
         method: "PATCH",
         body: trigger,
@@ -2146,7 +2204,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Trigger, void>({
+      this.request<IMySuperPrefixTriggerMySuperSuffix, void>({
         path: `/${username}/triggers/${id}`,
         method: "PUT",
         body: trigger,
@@ -2166,7 +2224,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     allPermissions: (username: string, type: string, typeId: string, params: RequestParams = {}) =>
-      this.request<Permission[], void>({
+      this.request<IMySuperPrefixPermissionMySuperSuffix[], void>({
         path: `/${username}/${type}/${typeId}/acl`,
         method: "GET",
         secure: true,
@@ -2187,10 +2245,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       username: string,
       type: string,
       typeId: string,
-      permission: Permission,
+      permission: IMySuperPrefixPermissionMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<Permission, void>({
+      this.request<IMySuperPrefixPermissionMySuperSuffix, void>({
         path: `/${username}/${type}/${typeId}/acl`,
         method: "POST",
         body: permission,
@@ -2228,7 +2286,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     getPermission: (username: string, type: string, typeId: string, id: string, params: RequestParams = {}) =>
-      this.request<Permission, void>({
+      this.request<IMySuperPrefixPermissionMySuperSuffix, void>({
         path: `/${username}/${type}/${typeId}/acl/${id}`,
         method: "GET",
         secure: true,
@@ -2257,7 +2315,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Permission, void>({
+      this.request<IMySuperPrefixPermissionMySuperSuffix, void>({
         path: `/${username}/${type}/${typeId}/acl/${id}`,
         method: "PATCH",
         body: permission,
@@ -2288,7 +2346,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
       },
       params: RequestParams = {},
     ) =>
-      this.request<Permission, void>({
+      this.request<IMySuperPrefixPermissionMySuperSuffix, void>({
         path: `/${username}/${type}/${typeId}/acl/${id}`,
         method: "PUT",
         body: permission,

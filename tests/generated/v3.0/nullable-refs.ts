@@ -9,14 +9,14 @@
  * ---------------------------------------------------------------
  */
 
-export type OtherObject = object;
+export type IMySuperPrefixOtherObjectMySuperSuffix = object;
 
-export interface TestObject {
-  otherObjectMaybeNullA: OtherObject | null;
-  otherObjectMaybeNullB: OtherObject | null;
-  otherObjectMaybeNullC: OtherObject | null;
-  otherObjectMaybeNullD: OtherObject | null;
-  otherObjectMaybeUndefined?: OtherObject;
+export interface IMySuperPrefixTestObjectMySuperSuffix {
+  otherObjectMaybeNullA: IMySuperPrefixOtherObjectMySuperSuffix | null;
+  otherObjectMaybeNullB: IMySuperPrefixOtherObjectMySuperSuffix | null;
+  otherObjectMaybeNullC: IMySuperPrefixOtherObjectMySuperSuffix | null;
+  otherObjectMaybeNullD: IMySuperPrefixOtherObjectMySuperSuffix | null;
+  otherObjectMaybeUndefined?: IMySuperPrefixOtherObjectMySuperSuffix;
   stringMaybeNullA: string | null;
   stringMaybeNullAndUndefined?: string | null;
   stringMaybeNullB: string | null;

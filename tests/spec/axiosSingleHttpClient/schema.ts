@@ -1905,7 +1905,7 @@ export interface UserUpdate {
 
 export type Users = User[];
 
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
+import axios, { Axios, AxiosInstance, AxiosRequestConfig, AxiosResponse, HeadersDefaults, ResponseType } from "axios";
 
 export type QueryParamsType = Record<string | number, any>;
 

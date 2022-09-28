@@ -9,13 +9,13 @@
  * ---------------------------------------------------------------
  */
 
-export interface Activities {
+export interface IMySuperPrefixActivitiesMySuperSuffix {
   /**
    * Total number of items available.
    * @format int32
    */
   count?: number;
-  history?: Activity[];
+  history?: IMySuperPrefixActivityMySuperSuffix[];
   /**
    * Number of items to retrieve (100 max).
    * @format int32
@@ -28,19 +28,32 @@ export interface Activities {
   offset?: number;
 }
 
-export interface Activity {
+export interface IMySuperPrefixActivityMySuperSuffix {
   /** Unique identifier for the activity */
   uuid?: string;
 }
 
-export interface Error {
+export interface IMySuperPrefixErrorMySuperSuffix {
   /** @format int32 */
   code?: number;
   fields?: string;
   message?: string;
 }
 
-export interface PriceEstimate {
+export interface IMySuperPrefixHistoryListParamsMySuperSuffix {
+  /**
+   * Offset the list of returned results by this amount. Default is zero.
+   * @format int32
+   */
+  offset?: number;
+  /**
+   * Number of items to retrieve. Default is 5, maximum is 100.
+   * @format int32
+   */
+  limit?: number;
+}
+
+export interface IMySuperPrefixPriceEstimateMySuperSuffix {
   /** [ISO 4217](http://en.wikipedia.org/wiki/ISO_4217) currency code. */
   currency_code?: string;
   /** Display name of product. */
@@ -57,7 +70,30 @@ export interface PriceEstimate {
   surge_multiplier?: number;
 }
 
-export interface Product {
+export interface IMySuperPrefixPriceListParamsMySuperSuffix {
+  /**
+   * Latitude component of start location.
+   * @format double
+   */
+  start_latitude: number;
+  /**
+   * Longitude component of start location.
+   * @format double
+   */
+  start_longitude: number;
+  /**
+   * Latitude component of end location.
+   * @format double
+   */
+  end_latitude?: number;
+  /**
+   * Longitude component of end location.
+   * @format double
+   */
+  end_longitude: number;
+}
+
+export interface IMySuperPrefixProductMySuperSuffix {
   /** Capacity of product. For example, 4 people. */
   capacity?: number;
   /** Description of product. */
@@ -70,12 +106,25 @@ export interface Product {
   product_id?: string;
 }
 
-export interface ProductList {
+export interface IMySuperPrefixProductListMySuperSuffix {
   /** Contains the list of products */
-  products?: Product[];
+  products?: IMySuperPrefixProductMySuperSuffix[];
 }
 
-export interface Profile {
+export interface IMySuperPrefixProductsListParamsMySuperSuffix {
+  /**
+   * Latitude component of location.
+   * @format double
+   */
+  latitude: number;
+  /**
+   * Longitude component of location.
+   * @format double
+   */
+  longitude: number;
+}
+
+export interface IMySuperPrefixProfileMySuperSuffix {
   /** Email address of the Uber user */
   email?: string;
   /** First name of the Uber user. */
@@ -86,6 +135,26 @@ export interface Profile {
   picture?: string;
   /** Promo code of the Uber user. */
   promo_code?: string;
+}
+
+export interface IMySuperPrefixTimeListParamsMySuperSuffix {
+  /**
+   * Latitude component of start location.
+   * @format double
+   */
+  start_latitude: number;
+  /**
+   * Longitude component of start location.
+   * @format double
+   */
+  start_longitude: number;
+  /**
+   * Unique customer identifier to be used for experience customization.
+   * @format uuid
+   */
+  customer_uuid?: string;
+  /** Unique identifier representing a specific product for a given latitude & longitude. */
+  product_id?: string;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -314,22 +383,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/products
      * @secure
      */
-    productsList: (
-      query: {
-        /**
-         * Latitude component of location.
-         * @format double
-         */
-        latitude: number;
-        /**
-         * Longitude component of location.
-         * @format double
-         */
-        longitude: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<Product[], Error>({
+    productsList: (query: IMySuperPrefixProductsListParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixProductMySuperSuffix[], IMySuperPrefixErrorMySuperSuffix>({
         path: `/products`,
         method: "GET",
         query: query,
@@ -347,32 +402,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Price Estimates
      * @request GET:/estimates/price
      */
-    priceList: (
-      query: {
-        /**
-         * Latitude component of start location.
-         * @format double
-         */
-        start_latitude: number;
-        /**
-         * Longitude component of start location.
-         * @format double
-         */
-        start_longitude: number;
-        /**
-         * Latitude component of end location.
-         * @format double
-         */
-        end_latitude?: number;
-        /**
-         * Longitude component of end location.
-         * @format double
-         */
-        end_longitude: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<PriceEstimate[], Error>({
+    priceList: (query: IMySuperPrefixPriceListParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixPriceEstimateMySuperSuffix[], IMySuperPrefixErrorMySuperSuffix>({
         path: `/estimates/price`,
         method: "GET",
         query: query,
@@ -388,29 +419,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary Time Estimates
      * @request GET:/estimates/time
      */
-    timeList: (
-      query: {
-        /**
-         * Latitude component of start location.
-         * @format double
-         */
-        start_latitude: number;
-        /**
-         * Longitude component of start location.
-         * @format double
-         */
-        start_longitude: number;
-        /**
-         * Unique customer identifier to be used for experience customization.
-         * @format uuid
-         */
-        customer_uuid?: string;
-        /** Unique identifier representing a specific product for a given latitude & longitude. */
-        product_id?: string;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<Product[], Error>({
+    timeList: (query: IMySuperPrefixTimeListParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixProductMySuperSuffix[], IMySuperPrefixErrorMySuperSuffix>({
         path: `/estimates/time`,
         method: "GET",
         query: query,
@@ -428,7 +438,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/me
      */
     getMe: (params: RequestParams = {}) =>
-      this.request<Profile, Error>({
+      this.request<IMySuperPrefixProfileMySuperSuffix, IMySuperPrefixErrorMySuperSuffix>({
         path: `/me`,
         method: "GET",
         format: "json",
@@ -444,22 +454,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @summary User Activity
      * @request GET:/history
      */
-    historyList: (
-      query?: {
-        /**
-         * Offset the list of returned results by this amount. Default is zero.
-         * @format int32
-         */
-        offset?: number;
-        /**
-         * Number of items to retrieve. Default is 5, maximum is 100.
-         * @format int32
-         */
-        limit?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<Activities, Error>({
+    historyList: (query: IMySuperPrefixHistoryListParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixActivitiesMySuperSuffix, IMySuperPrefixErrorMySuperSuffix>({
         path: `/history`,
         method: "GET",
         query: query,

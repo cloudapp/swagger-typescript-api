@@ -12,7 +12,7 @@
 /**
  * Provides information about an Up bank account.
  */
-export interface AccountResource {
+export interface IMySuperPrefixAccountResourceMySuperSuffix {
   attributes: {
     /**
      * The name associated with the account in the Up application.
@@ -23,13 +23,13 @@ export interface AccountResource {
      * The bank account type of this account.
      *
      */
-    accountType: AccountTypeEnum;
+    accountType: IMySuperPrefixAccountTypeEnumMySuperSuffix;
     /**
      * The available balance of the account, taking into account any amounts
      * that are currently on hold.
      *
      */
-    balance: MoneyObject;
+    balance: IMySuperPrefixMoneyObjectMySuperSuffix;
     /**
      * The date-time at which this account was first opened.
      *
@@ -68,21 +68,30 @@ export interface AccountResource {
 * Specifies the type of bank account. Currently returned values are `SAVER`
 and `TRANSACTIONAL`.
 */
-export enum AccountTypeEnum {
+export enum IMySuperPrefixAccountTypeEnumMySuperSuffix {
   SAVER = "SAVER",
   TRANSACTIONAL = "TRANSACTIONAL",
+}
+
+export interface IMySuperPrefixAccountsListParamsMySuperSuffix {
+  /**
+   * The number of records to return in each page.
+   *
+   * @example 30
+   */
+  "page[size]"?: number;
 }
 
 /**
 * Provides information about an instant reimbursement in the form of
 cashback.
 */
-export interface CashbackObject {
+export interface IMySuperPrefixCashbackObjectMySuperSuffix {
   /**
    * The total amount of cashback paid, represented as a positive value.
    *
    */
-  amount: MoneyObject;
+  amount: IMySuperPrefixMoneyObjectMySuperSuffix;
   /**
    * A brief description of why this cashback was paid.
    *
@@ -90,10 +99,21 @@ export interface CashbackObject {
   description: string;
 }
 
+export interface IMySuperPrefixCategoriesListParamsMySuperSuffix {
+  /**
+   * The unique identifier of a parent category for which to
+   * return only its children. Providing an invalid category
+   * identifier results in a `404` response.
+   *
+   * @example good-life
+   */
+  "filter[parent]"?: string;
+}
+
 /**
  * Provides information about a category and its ancestry.
  */
-export interface CategoryResource {
+export interface IMySuperPrefixCategoryResourceMySuperSuffix {
   attributes: {
     /**
      * The name of this category as seen in the Up application.
@@ -160,29 +180,29 @@ export interface CategoryResource {
 * Request to create a new webhook. This currently only requires a `url`
 attribute.
 */
-export interface CreateWebhookRequest {
+export interface IMySuperPrefixCreateWebhookRequestMySuperSuffix {
   /**
    * The webhook resource to create.
    *
    */
-  data: WebhookInputResource;
+  data: IMySuperPrefixWebhookInputResourceMySuperSuffix;
 }
 
 /**
  * Successful response after creating a webhook.
  */
-export interface CreateWebhookResponse {
+export interface IMySuperPrefixCreateWebhookResponseMySuperSuffix {
   /**
    * The webhook that was created.
    *
    */
-  data: WebhookResource;
+  data: IMySuperPrefixWebhookResourceMySuperSuffix;
 }
 
 /**
  * Provides information about an error processing a request.
  */
-export interface ErrorObject {
+export interface IMySuperPrefixErrorObjectMySuperSuffix {
   /**
    * A detailed description of this error. This should be considered unique
    * to individual occurrences of an error and subject to change. It is
@@ -229,76 +249,76 @@ export interface ErrorObject {
 /**
  * Generic error response that returns one or more errors.
  */
-export interface ErrorResponse {
+export interface IMySuperPrefixErrorResponseMySuperSuffix {
   /**
    * The list of errors returned in this response.
    *
    */
-  errors: ErrorObject[];
+  errors: IMySuperPrefixErrorObjectMySuperSuffix[];
 }
 
 /**
  * Successful response to get a single account.
  */
-export interface GetAccountResponse {
+export interface IMySuperPrefixGetAccountResponseMySuperSuffix {
   /**
    * The account returned in this response.
    *
    */
-  data: AccountResource;
+  data: IMySuperPrefixAccountResourceMySuperSuffix;
 }
 
 /**
  * Successful response to get a single category and its ancestry.
  */
-export interface GetCategoryResponse {
+export interface IMySuperPrefixGetCategoryResponseMySuperSuffix {
   /**
    * The category returned in this response.
    *
    */
-  data: CategoryResource;
+  data: IMySuperPrefixCategoryResourceMySuperSuffix;
 }
 
 /**
  * Successful response to get a single transaction.
  */
-export interface GetTransactionResponse {
+export interface IMySuperPrefixGetTransactionResponseMySuperSuffix {
   /**
    * The transaction returned in this response.
    *
    */
-  data: TransactionResource;
+  data: IMySuperPrefixTransactionResourceMySuperSuffix;
 }
 
 /**
  * Successful response to get a single webhook.
  */
-export interface GetWebhookResponse {
+export interface IMySuperPrefixGetWebhookResponseMySuperSuffix {
   /**
    * The webhook returned in this response.
    *
    */
-  data: WebhookResource;
+  data: IMySuperPrefixWebhookResourceMySuperSuffix;
 }
 
 /**
 * Provides information about the amount at which a transaction was in the
 `HELD` status.
 */
-export interface HoldInfoObject {
+export interface IMySuperPrefixHoldInfoObjectMySuperSuffix {
   /**
    * The amount of this transaction while in the `HELD` status, in
    * Australian dollars.
    *
    */
-  amount: MoneyObject;
+  amount: IMySuperPrefixMoneyObjectMySuperSuffix;
   /**
    * The foreign currency amount of this transaction while in the `HELD`
    * status. This field will be `null` for domestic transactions. The amount
    * was converted to the AUD amount reflected in the `amount` field.
    *
    */
-  foreignAmount: MoneyObject | null;
+  foreignAmount: IMySuperPrefixMoneyObjectMySuperSuffix | null;
 }
 
 /**
@@ -306,12 +326,12 @@ export interface HoldInfoObject {
 accounts, which can be scrolled by following the `prev` and `next` links
 if present.
 */
-export interface ListAccountsResponse {
+export interface IMySuperPrefixListAccountsResponseMySuperSuffix {
   /**
    * The list of accounts returned in this response.
    *
    */
-  data: AccountResource[];
+  data: IMySuperPrefixAccountResourceMySuperSuffix[];
   links: {
     /**
      * The link to the previous page in the results. If this value is `null`
@@ -332,12 +352,12 @@ export interface ListAccountsResponse {
 * Successful response to get all categories and their ancestry. The
 returned list is not paginated.
 */
-export interface ListCategoriesResponse {
+export interface IMySuperPrefixListCategoriesResponseMySuperSuffix {
   /**
    * The list of categories returned in this response.
    *
    */
-  data: CategoryResource[];
+  data: IMySuperPrefixCategoryResourceMySuperSuffix[];
 }
 
 /**
@@ -345,12 +365,12 @@ export interface ListCategoriesResponse {
 tags, which can be scrolled by following the `prev` and `next` links if
 present.
 */
-export interface ListTagsResponse {
+export interface IMySuperPrefixListTagsResponseMySuperSuffix {
   /**
    * The list of tags returned in this response.
    *
    */
-  data: TagResource[];
+  data: IMySuperPrefixTagResourceMySuperSuffix[];
   links: {
     /**
      * The link to the previous page in the results. If this value is `null`
@@ -372,12 +392,12 @@ export interface ListTagsResponse {
 list of transactions, which can be scrolled by following the `prev` and
 `next` links if present.
 */
-export interface ListTransactionsResponse {
+export interface IMySuperPrefixListTransactionsResponseMySuperSuffix {
   /**
    * The list of transactions returned in this response.
    *
    */
-  data: TransactionResource[];
+  data: IMySuperPrefixTransactionResourceMySuperSuffix[];
   links: {
     /**
      * The link to the previous page in the results. If this value is `null`
@@ -399,12 +419,12 @@ export interface ListTransactionsResponse {
 a paginated list of delivery logs, which can be scrolled by following the
 `next` and `prev` links if present.
 */
-export interface ListWebhookDeliveryLogsResponse {
+export interface IMySuperPrefixListWebhookDeliveryLogsResponseMySuperSuffix {
   /**
    * The list of delivery logs returned in this response.
    *
    */
-  data: WebhookDeliveryLogResource[];
+  data: IMySuperPrefixWebhookDeliveryLogResourceMySuperSuffix[];
   links: {
     /**
      * The link to the previous page in the results. If this value is `null`
@@ -426,12 +446,12 @@ export interface ListWebhookDeliveryLogsResponse {
 webhooks, which can be scrolled by following the `prev` and `next` links
 if present.
 */
-export interface ListWebhooksResponse {
+export interface IMySuperPrefixListWebhooksResponseMySuperSuffix {
   /**
    * The list of webhooks returned in this response.
    *
    */
-  data: WebhookResource[];
+  data: IMySuperPrefixWebhookResourceMySuperSuffix[];
   links: {
     /**
      * The link to the previous page in the results. If this value is `null`
@@ -448,10 +468,25 @@ export interface ListWebhooksResponse {
   };
 }
 
+export interface IMySuperPrefixLogsDetailParamsMySuperSuffix {
+  /**
+   * The number of records to return in each page.
+   *
+   * @example 30
+   */
+  "page[size]"?: number;
+  /**
+   * The unique identifier for the webhook.
+   *
+   * @example 49733526-b90d-436a-8a75-9715a1d7cc5b
+   */
+  webhookId: string;
+}
+
 /**
  * Provides information about a value of money.
  */
-export interface MoneyObject {
+export interface IMySuperPrefixMoneyObjectMySuperSuffix {
   /**
    * The ISO 4217 currency code.
    *
@@ -476,7 +511,7 @@ export interface MoneyObject {
 /**
  * Basic ping response to verify authentication.
  */
-export interface PingResponse {
+export interface IMySuperPrefixPingResponseMySuperSuffix {
   meta: {
     /**
      * The unique identifier of the authenticated customer.
@@ -495,26 +530,26 @@ export interface PingResponse {
 * Provides information about how a Round Up was applied, such as whether or
 not a boost was included in the Round Up.
 */
-export interface RoundUpObject {
+export interface IMySuperPrefixRoundUpObjectMySuperSuffix {
   /**
    * The total amount of this Round Up, including any boosts, represented as
    * a negative value.
    *
    */
-  amount: MoneyObject;
+  amount: IMySuperPrefixMoneyObjectMySuperSuffix;
   /**
    * The portion of the Round Up `amount` owing to boosted Round Ups,
    * represented as a negative value. If no boost was added to the Round Up
    * this field will be `null`.
    *
    */
-  boostPortion: MoneyObject | null;
+  boostPortion: IMySuperPrefixMoneyObjectMySuperSuffix | null;
 }
 
 /**
  * Bla bla bla foo bar baz
  */
-export enum SomeEnumName {
+export enum IMySuperPrefixSomeEnumNameMySuperSuffix {
   Foo = "Foo",
   Bar = "Bar",
   Baz = "Baz",
@@ -524,7 +559,7 @@ export enum SomeEnumName {
 /**
  * Uniquely identifies a single tag in the API.
  */
-export interface TagInputResourceIdentifier {
+export interface IMySuperPrefixTagInputResourceIdentifierMySuperSuffix {
   /**
    * The label of the tag, which also acts as the tag’s unique identifier.
    *
@@ -537,7 +572,7 @@ export interface TagInputResourceIdentifier {
 /**
  * Provides information about a tag.
  */
-export interface TagResource {
+export interface IMySuperPrefixTagResourceMySuperSuffix {
   /**
    * The label of the tag, which also acts as the tag’s unique identifier.
    *
@@ -558,14 +593,23 @@ export interface TagResource {
   type: string;
 }
 
-export interface TransactionResource {
+export interface IMySuperPrefixTagsListParamsMySuperSuffix {
+  /**
+   * The number of records to return in each page.
+   *
+   * @example 50
+   */
+  "page[size]"?: number;
+}
+
+export interface IMySuperPrefixTransactionResourceMySuperSuffix {
   attributes: {
     /**
      * The current processing status of this transaction, according to
      * whether or not this transaction has settled or is still held.
      *
      */
-    status: TransactionStatusEnum;
+    status: IMySuperPrefixTransactionStatusEnumMySuperSuffix;
     /**
      * The original, unprocessed text of the transaction. This is often not
      * a perfect indicator of the actual merchant, but it is useful for
@@ -591,19 +635,19 @@ export interface TransactionResource {
      * transaction while `HELD`.
      *
      */
-    holdInfo: HoldInfoObject | null;
+    holdInfo: IMySuperPrefixHoldInfoObjectMySuperSuffix | null;
     /**
      * Details of how this transaction was rounded-up. If no Round Up was
      * applied this field will be `null`.
      *
      */
-    roundUp: RoundUpObject | null;
+    roundUp: IMySuperPrefixRoundUpObjectMySuperSuffix | null;
     /**
      * If all or part of this transaction was instantly reimbursed in the
      * form of cashback, details of the reimbursement.
      *
      */
-    cashback: CashbackObject | null;
+    cashback: IMySuperPrefixCashbackObjectMySuperSuffix | null;
     /**
      * The amount of this transaction in Australian dollars. For
      * transactions that were once `HELD` but are now `SETTLED`, refer to
@@ -611,7 +655,7 @@ export interface TransactionResource {
      * `HELD` at.
      *
      */
-    amount: MoneyObject;
+    amount: IMySuperPrefixMoneyObjectMySuperSuffix;
     /**
      * The foreign currency amount of this transaction. This field will be
      * `null` for domestic transactions. The amount was converted to the AUD
@@ -620,7 +664,7 @@ export interface TransactionResource {
      * `HELD` at.
      *
      */
-    foreignAmount: MoneyObject | null;
+    foreignAmount: IMySuperPrefixMoneyObjectMySuperSuffix | null;
     /**
      * The date-time at which this transaction settled. This field will be
      * `null` for transactions that are currently in the `HELD` status.
@@ -732,27 +776,139 @@ Currently returned values are `HELD` and `SETTLED`. When a transaction is
 held, its account’s `availableBalance` is affected. When a transaction is
 settled, its account’s `currentBalance` is affected.
 */
-export enum TransactionStatusEnum {
+export enum IMySuperPrefixTransactionStatusEnumMySuperSuffix {
   HELD = "HELD",
   SETTLED = "SETTLED",
+}
+
+export interface IMySuperPrefixTransactionsDetailParamsMySuperSuffix {
+  /**
+   * The number of records to return in each page.
+   *
+   * @example 30
+   */
+  "page[size]"?: number;
+  /**
+   * The transaction status for which to return records. This
+   * can be used to filter `HELD` transactions from those
+   * that are `SETTLED`.
+   *
+   * @example HELD
+   */
+  "filter[status]"?: IMySuperPrefixTransactionStatusEnumMySuperSuffix;
+  /**
+   * The start date-time from which to return records,
+   * formatted according to rfc-3339. Not to be used for
+   * pagination purposes.
+   *
+   * @format date-time
+   * @example 2020-01-01T01:02:03+10:00
+   */
+  "filter[since]"?: string;
+  /**
+   * The end date-time up to which to return records,
+   * formatted according to rfc-3339. Not to be used for
+   * pagination purposes.
+   *
+   * @format date-time
+   * @example 2020-02-01T01:02:03+10:00
+   */
+  "filter[until]"?: string;
+  /**
+   * The category identifier for which to filter transactions.
+   * Both parent and child categories can be filtered through
+   * this parameter. Providing an invalid category identifier
+   * results in a `404` response.
+   *
+   * @example good-life
+   */
+  "filter[category]"?: string;
+  /**
+   * A transaction tag to filter for which to return records.
+   * If the tag does not exist, zero records are returned and
+   * a success response is given.
+   *
+   * @example Holiday
+   */
+  "filter[tag]"?: string;
+  /**
+   * The unique identifier for the account.
+   *
+   * @example 86150b64-feaa-4186-a7e4-e84eae764602
+   */
+  accountId: string;
+}
+
+export interface IMySuperPrefixTransactionsListParamsMySuperSuffix {
+  /**
+   * The number of records to return in each page.
+   *
+   * @example 30
+   */
+  "page[size]"?: number;
+  /**
+   * The transaction status for which to return records. This
+   * can be used to filter `HELD` transactions from those
+   * that are `SETTLED`.
+   *
+   * @example HELD
+   */
+  "filter[status]"?: IMySuperPrefixTransactionStatusEnumMySuperSuffix;
+  /**
+   * The start date-time from which to return records,
+   * formatted according to rfc-3339. Not to be used for
+   * pagination purposes.
+   *
+   * @format date-time
+   * @example 2020-01-01T01:02:03+10:00
+   */
+  "filter[since]"?: string;
+  /**
+   * The end date-time up to which to return records,
+   * formatted according to rfc-3339. Not to be used for
+   * pagination purposes.
+   *
+   * @format date-time
+   * @example 2020-02-01T01:02:03+10:00
+   */
+  "filter[until]"?: string;
+  /**
+   * The category identifier for which to filter transactions.
+   * Both parent and child categories can be filtered through
+   * this parameter. Providing an invalid category identifier
+   * results in a `404` response.
+   *
+   * @example good-life
+   */
+  "filter[category]"?: string;
+  /** Blablabla bla */
+  someEnumName?: IMySuperPrefixSomeEnumNameMySuperSuffix;
+  /**
+   * A transaction tag to filter for which to return records.
+   * If the tag does not exist, zero records are returned and
+   * a success response is given.
+   *
+   * @example Holiday
+   */
+  "filter[tag]"?: string;
 }
 
 /**
  * Request to add or remove tags associated with a transaction.
  */
-export interface UpdateTransactionTagsRequest {
+export interface IMySuperPrefixUpdateTransactionTagsRequestMySuperSuffix {
   /**
    * The tags to add to or remove from the transaction.
    *
    */
-  data: TagInputResourceIdentifier[];
+  data: IMySuperPrefixTagInputResourceIdentifierMySuperSuffix[];
 }
 
 /**
 * Provides historical webhook event delivery information for analysis and
 debugging purposes.
 */
-export interface WebhookDeliveryLogResource {
+export interface IMySuperPrefixWebhookDeliveryLogResourceMySuperSuffix {
   attributes: {
     /**
      * Information about the request that was sent to the webhook URL.
@@ -785,7 +941,7 @@ export interface WebhookDeliveryLogResource {
      * The success or failure status of this delivery attempt.
      *
      */
-    deliveryStatus: WebhookDeliveryStatusEnum;
+    deliveryStatus: IMySuperPrefixWebhookDeliveryStatusEnumMySuperSuffix;
     /**
      * The date-time at which this log entry was created.
      *
@@ -826,7 +982,7 @@ described below:
 - **`BAD_RESPONSE_CODE`**: The event was delivered to the webhook URL
   but a non-`200` response was received.
 */
-export enum WebhookDeliveryStatusEnum {
+export enum IMySuperPrefixWebhookDeliveryStatusEnumMySuperSuffix {
   DELIVERED = "DELIVERED",
   UNDELIVERABLE = "UNDELIVERABLE",
   BAD_RESPONSE_CODE = "BAD_RESPONSE_CODE",
@@ -835,12 +991,12 @@ export enum WebhookDeliveryStatusEnum {
 /**
  * Asynchronous callback request used for webhook event delivery.
  */
-export interface WebhookEventCallback {
+export interface IMySuperPrefixWebhookEventCallbackMySuperSuffix {
   /**
    * The webhook event data sent to the subscribed webhook.
    *
    */
-  data: WebhookEventResource;
+  data: IMySuperPrefixWebhookEventResourceMySuperSuffix;
 }
 
 /**
@@ -848,14 +1004,14 @@ export interface WebhookEventCallback {
 subscribed endpoints. Webhooks events have defined `eventType`s and may
 optionally relate to other resources within the Up API.
 */
-export interface WebhookEventResource {
+export interface IMySuperPrefixWebhookEventResourceMySuperSuffix {
   attributes: {
     /**
      * The type of this event. This can be used to determine what action to
      * take in response to the event.
      *
      */
-    eventType: WebhookEventTypeEnum;
+    eventType: IMySuperPrefixWebhookEventTypeEnumMySuperSuffix;
     /**
      * The date-time at which this event was generated.
      *
@@ -916,7 +1072,7 @@ export interface WebhookEventResource {
 action to take in response to the event, such as which relationships to
 expect.
 */
-export enum WebhookEventTypeEnum {
+export enum IMySuperPrefixWebhookEventTypeEnumMySuperSuffix {
   TRANSACTION_CREATED = "TRANSACTION_CREATED",
   TRANSACTION_SETTLED = "TRANSACTION_SETTLED",
   TRANSACTION_DELETED = "TRANSACTION_DELETED",
@@ -926,7 +1082,7 @@ export enum WebhookEventTypeEnum {
 /**
  * Represents a webhook specified as request input.
  */
-export interface WebhookInputResource {
+export interface IMySuperPrefixWebhookInputResourceMySuperSuffix {
   attributes: {
     /**
      * The URL that this webhook should post events to. This must be a valid
@@ -947,7 +1103,7 @@ export interface WebhookInputResource {
 /**
  * Provides information about a webhook.
  */
-export interface WebhookResource {
+export interface IMySuperPrefixWebhookResourceMySuperSuffix {
   attributes: {
     /**
      * The URL that this webhook is configured to `POST` events to.
@@ -1007,6 +1163,15 @@ export interface WebhookResource {
   };
   /** The type of this resource: `webhooks` */
   type: string;
+}
+
+export interface IMySuperPrefixWebhooksListParamsMySuperSuffix {
+  /**
+   * The number of records to return in each page.
+   *
+   * @example 30
+   */
+  "page[size]"?: number;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -1239,18 +1404,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/accounts
      * @secure
      */
-    accountsList: (
-      query?: {
-        /**
-         * The number of records to return in each page.
-         *
-         * @example 30
-         */
-        "page[size]"?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<ListAccountsResponse, any>({
+    accountsList: (query: IMySuperPrefixAccountsListParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixListAccountsResponseMySuperSuffix, any>({
         path: `/accounts`,
         method: "GET",
         query: query,
@@ -1269,7 +1424,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     accountsDetail: (id: string, params: RequestParams = {}) =>
-      this.request<GetAccountResponse, any>({
+      this.request<IMySuperPrefixGetAccountResponseMySuperSuffix, any>({
         path: `/accounts/${id}`,
         method: "GET",
         secure: true,
@@ -1287,61 +1442,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     transactionsDetail: (
-      accountId: string,
-      query?: {
-        /**
-         * The number of records to return in each page.
-         *
-         * @example 30
-         */
-        "page[size]"?: number;
-        /**
-         * The transaction status for which to return records. This
-         * can be used to filter `HELD` transactions from those
-         * that are `SETTLED`.
-         *
-         * @example HELD
-         */
-        "filter[status]"?: TransactionStatusEnum;
-        /**
-         * The start date-time from which to return records,
-         * formatted according to rfc-3339. Not to be used for
-         * pagination purposes.
-         *
-         * @format date-time
-         * @example 2020-01-01T01:02:03+10:00
-         */
-        "filter[since]"?: string;
-        /**
-         * The end date-time up to which to return records,
-         * formatted according to rfc-3339. Not to be used for
-         * pagination purposes.
-         *
-         * @format date-time
-         * @example 2020-02-01T01:02:03+10:00
-         */
-        "filter[until]"?: string;
-        /**
-         * The category identifier for which to filter transactions.
-         * Both parent and child categories can be filtered through
-         * this parameter. Providing an invalid category identifier
-         * results in a `404` response.
-         *
-         * @example good-life
-         */
-        "filter[category]"?: string;
-        /**
-         * A transaction tag to filter for which to return records.
-         * If the tag does not exist, zero records are returned and
-         * a success response is given.
-         *
-         * @example Holiday
-         */
-        "filter[tag]"?: string;
-      },
+      { accountId, ...query }: IMySuperPrefixTransactionsDetailParamsMySuperSuffix,
       params: RequestParams = {},
     ) =>
-      this.request<ListTransactionsResponse, any>({
+      this.request<IMySuperPrefixListTransactionsResponseMySuperSuffix, any>({
         path: `/accounts/${accountId}/transactions`,
         method: "GET",
         query: query,
@@ -1360,20 +1464,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/categories
      * @secure
      */
-    categoriesList: (
-      query?: {
-        /**
-         * The unique identifier of a parent category for which to
-         * return only its children. Providing an invalid category
-         * identifier results in a `404` response.
-         *
-         * @example good-life
-         */
-        "filter[parent]"?: string;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<ListCategoriesResponse, any>({
+    categoriesList: (query: IMySuperPrefixCategoriesListParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixListCategoriesResponseMySuperSuffix, any>({
         path: `/categories`,
         method: "GET",
         query: query,
@@ -1392,7 +1484,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     categoriesDetail: (id: string, params: RequestParams = {}) =>
-      this.request<GetCategoryResponse, any>({
+      this.request<IMySuperPrefixGetCategoryResponseMySuperSuffix, any>({
         path: `/categories/${id}`,
         method: "GET",
         secure: true,
@@ -1411,7 +1503,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     pingList: (params: RequestParams = {}) =>
-      this.request<PingResponse, ErrorResponse>({
+      this.request<IMySuperPrefixPingResponseMySuperSuffix, IMySuperPrefixErrorResponseMySuperSuffix>({
         path: `/util/ping`,
         method: "GET",
         secure: true,
@@ -1429,18 +1521,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/tags
      * @secure
      */
-    tagsList: (
-      query?: {
-        /**
-         * The number of records to return in each page.
-         *
-         * @example 50
-         */
-        "page[size]"?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<ListTagsResponse, any>({
+    tagsList: (query: IMySuperPrefixTagsListParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixListTagsResponseMySuperSuffix, any>({
         path: `/tags`,
         method: "GET",
         query: query,
@@ -1459,7 +1541,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/transactions/{transactionId}/relationships/tags
      * @secure
      */
-    relationshipsTagsCreate: (transactionId: string, data: UpdateTransactionTagsRequest, params: RequestParams = {}) =>
+    relationshipsTagsCreate: (
+      transactionId: string,
+      data: IMySuperPrefixUpdateTransactionTagsRequestMySuperSuffix,
+      params: RequestParams = {},
+    ) =>
       this.request<void, any>({
         path: `/transactions/${transactionId}/relationships/tags`,
         method: "POST",
@@ -1478,7 +1564,11 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request DELETE:/transactions/{transactionId}/relationships/tags
      * @secure
      */
-    relationshipsTagsDelete: (transactionId: string, data: UpdateTransactionTagsRequest, params: RequestParams = {}) =>
+    relationshipsTagsDelete: (
+      transactionId: string,
+      data: IMySuperPrefixUpdateTransactionTagsRequestMySuperSuffix,
+      params: RequestParams = {},
+    ) =>
       this.request<void, any>({
         path: `/transactions/${transactionId}/relationships/tags`,
         method: "DELETE",
@@ -1497,63 +1587,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/transactions
      * @secure
      */
-    transactionsList: (
-      query?: {
-        /**
-         * The number of records to return in each page.
-         *
-         * @example 30
-         */
-        "page[size]"?: number;
-        /**
-         * The transaction status for which to return records. This
-         * can be used to filter `HELD` transactions from those
-         * that are `SETTLED`.
-         *
-         * @example HELD
-         */
-        "filter[status]"?: TransactionStatusEnum;
-        /**
-         * The start date-time from which to return records,
-         * formatted according to rfc-3339. Not to be used for
-         * pagination purposes.
-         *
-         * @format date-time
-         * @example 2020-01-01T01:02:03+10:00
-         */
-        "filter[since]"?: string;
-        /**
-         * The end date-time up to which to return records,
-         * formatted according to rfc-3339. Not to be used for
-         * pagination purposes.
-         *
-         * @format date-time
-         * @example 2020-02-01T01:02:03+10:00
-         */
-        "filter[until]"?: string;
-        /**
-         * The category identifier for which to filter transactions.
-         * Both parent and child categories can be filtered through
-         * this parameter. Providing an invalid category identifier
-         * results in a `404` response.
-         *
-         * @example good-life
-         */
-        "filter[category]"?: string;
-        /** Blablabla bla */
-        someEnumName?: SomeEnumName;
-        /**
-         * A transaction tag to filter for which to return records.
-         * If the tag does not exist, zero records are returned and
-         * a success response is given.
-         *
-         * @example Holiday
-         */
-        "filter[tag]"?: string;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<ListTransactionsResponse, any>({
+    transactionsList: (query: IMySuperPrefixTransactionsListParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixListTransactionsResponseMySuperSuffix, any>({
         path: `/transactions`,
         method: "GET",
         query: query,
@@ -1572,7 +1607,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     transactionsDetail: (id: string, params: RequestParams = {}) =>
-      this.request<GetTransactionResponse, any>({
+      this.request<IMySuperPrefixGetTransactionResponseMySuperSuffix, any>({
         path: `/transactions/${id}`,
         method: "GET",
         secure: true,
@@ -1590,18 +1625,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/webhooks
      * @secure
      */
-    webhooksList: (
-      query?: {
-        /**
-         * The number of records to return in each page.
-         *
-         * @example 30
-         */
-        "page[size]"?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<ListWebhooksResponse, any>({
+    webhooksList: (query: IMySuperPrefixWebhooksListParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixListWebhooksResponseMySuperSuffix, any>({
         path: `/webhooks`,
         method: "GET",
         query: query,
@@ -1619,8 +1644,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/webhooks
      * @secure
      */
-    webhooksCreate: (data: CreateWebhookRequest, params: RequestParams = {}) =>
-      this.request<CreateWebhookResponse, any>({
+    webhooksCreate: (data: IMySuperPrefixCreateWebhookRequestMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixCreateWebhookResponseMySuperSuffix, any>({
         path: `/webhooks`,
         method: "POST",
         body: data,
@@ -1640,7 +1665,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     webhooksDetail: (id: string, params: RequestParams = {}) =>
-      this.request<GetWebhookResponse, any>({
+      this.request<IMySuperPrefixGetWebhookResponseMySuperSuffix, any>({
         path: `/webhooks/${id}`,
         method: "GET",
         secure: true,
@@ -1675,7 +1700,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @secure
      */
     pingCreate: (webhookId: string, params: RequestParams = {}) =>
-      this.request<WebhookEventCallback, any>({
+      this.request<IMySuperPrefixWebhookEventCallbackMySuperSuffix, any>({
         path: `/webhooks/${webhookId}/ping`,
         method: "POST",
         secure: true,
@@ -1692,19 +1717,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request GET:/webhooks/{webhookId}/logs
      * @secure
      */
-    logsDetail: (
-      webhookId: string,
-      query?: {
-        /**
-         * The number of records to return in each page.
-         *
-         * @example 30
-         */
-        "page[size]"?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<ListWebhookDeliveryLogsResponse, any>({
+    logsDetail: ({ webhookId, ...query }: IMySuperPrefixLogsDetailParamsMySuperSuffix, params: RequestParams = {}) =>
+      this.request<IMySuperPrefixListWebhookDeliveryLogsResponseMySuperSuffix, any>({
         path: `/webhooks/${webhookId}/logs`,
         method: "GET",
         query: query,

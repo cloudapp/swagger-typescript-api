@@ -9,19 +9,23 @@
  * ---------------------------------------------------------------
  */
 
-export type Cat = Pet & {
+export type IMySuperPrefixCatMySuperSuffix = IMySuperPrefixPetMySuperSuffix & {
   hunts?: boolean;
   age?: number;
 };
 
-export type Dog = Pet & {
+export type IMySuperPrefixDogMySuperSuffix = IMySuperPrefixPetMySuperSuffix & {
   bark?: boolean;
   breed: "Dingo" | "Husky" | "Retriever" | "Shepherd";
 };
 
-export interface Pet {
+export interface IMySuperPrefixPetMySuperSuffix {
   pet_type: string;
 }
+
+export type IMySuperPrefixPetsPartialUpdatePayloadMySuperSuffix =
+  | IMySuperPrefixCatMySuperSuffix
+  | IMySuperPrefixDogMySuperSuffix;
 
 export type QueryParamsType = Record<string | number, any>;
 export type ResponseFormat = keyof Omit<Body, "body" | "bodyUsed">;
@@ -243,7 +247,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name PetsPartialUpdate
      * @request PATCH:/pets
      */
-    petsPartialUpdate: (data: Cat | Dog, params: RequestParams = {}) =>
+    petsPartialUpdate: (data: IMySuperPrefixPetsPartialUpdatePayloadMySuperSuffix, params: RequestParams = {}) =>
       this.request<void, any>({
         path: `/pets`,
         method: "PATCH",

@@ -9,7 +9,16 @@
  * ---------------------------------------------------------------
  */
 
-export interface DataSetList {
+export interface IMySuperPrefixPerformSearchPayloadMySuperSuffix {
+  /** Uses Lucene Query Syntax in the format of propertyName:value, propertyName:[num1 TO num2] and date range format: propertyName:[yyyyMMdd TO yyyyMMdd]. In the response please see the 'docs' element which has the list of record objects. Each record structure would consist of all the fields and their corresponding values. */
+  criteria: string;
+  /** Starting record number. Default value is 0. */
+  start?: number;
+  /** Specify number of rows to be returned. If you run the search with default values, in the response you will see 'numFound' attribute which will tell the number of records available in the dataset. */
+  rows?: number;
+}
+
+export interface IMySuperPrefixDataSetListMySuperSuffix {
   apis?: {
     /** To be used as a dataset parameter value */
     apiKey?: string;
@@ -29,13 +38,13 @@ export interface DataSetList {
   total?: number;
 }
 
-export enum SomeEnum {
+export enum IMySuperPrefixSomeEnumMySuperSuffix {
   Foo = "Foo",
   Bar = "Bar",
   FooBar = "Foo Bar",
 }
 
-export enum Status {
+export enum IMySuperPrefixStatusMySuperSuffix {
   Resolved = "resolved",
   New = "new",
   InProgress = "in progress",
@@ -267,7 +276,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
    * @request GET:/
    */
   listDataSets = (params: RequestParams = {}) =>
-    this.request<DataSetList, any>({
+    this.request<IMySuperPrefixDataSetListMySuperSuffix, any>({
       path: `/`,
       method: "GET",
       format: "json",
@@ -302,14 +311,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
     performSearch: (
       version: string,
       dataset: string,
-      data: {
-        /** Uses Lucene Query Syntax in the format of propertyName:value, propertyName:[num1 TO num2] and date range format: propertyName:[yyyyMMdd TO yyyyMMdd]. In the response please see the 'docs' element which has the list of record objects. Each record structure would consist of all the fields and their corresponding values. */
-        criteria: string;
-        /** Starting record number. Default value is 0. */
-        start?: number;
-        /** Specify number of rows to be returned. If you run the search with default values, in the response you will see 'numFound' attribute which will tell the number of records available in the dataset. */
-        rows?: number;
-      },
+      data: IMySuperPrefixPerformSearchPayloadMySuperSuffix,
       params: RequestParams = {},
     ) =>
       this.request<Record<string, object>[], void>({

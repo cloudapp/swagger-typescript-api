@@ -12,7 +12,7 @@
 /**
  * Authentiq ID in JWT format, self-signed.
  */
-export interface AuthentiqID {
+export interface IMySuperPrefixAuthentiqIDMySuperSuffix {
   /** device token for push messages */
   devtoken?: string;
   /** UUID and public signing key */
@@ -22,7 +22,7 @@ export interface AuthentiqID {
 /**
  * Claim in JWT format, self- or issuer-signed.
  */
-export interface Claims {
+export interface IMySuperPrefixClaimsMySuperSuffix {
   email?: string;
   phone?: string;
   /** claim scope */
@@ -32,7 +32,7 @@ export interface Claims {
   type?: string;
 }
 
-export interface Error {
+export interface IMySuperPrefixErrorMySuperSuffix {
   detail?: string;
   error: number;
   title?: string;
@@ -40,10 +40,31 @@ export interface Error {
   type?: string;
 }
 
+export interface IMySuperPrefixKeyRevokeNosecretParamsMySuperSuffix {
+  /** primary email associated to Key (ID) */
+  email: string;
+  /** primary phone number, international representation */
+  phone: string;
+  /** verification code sent by email */
+  code?: string;
+}
+
+export interface IMySuperPrefixKeyRevokeParamsMySuperSuffix {
+  /** revokation secret */
+  secret: string;
+  /** Public Signing Key - Authentiq ID (43 chars) */
+  pk: string;
+}
+
+export interface IMySuperPrefixPushLoginRequestParamsMySuperSuffix {
+  /** URI App will connect to */
+  callback: string;
+}
+
 /**
  * PushToken in JWT format, self-signed.
  */
-export interface PushToken {
+export interface IMySuperPrefixPushTokenMySuperSuffix {
   /** audience (URI) */
   aud: string;
   exp?: number;
@@ -53,6 +74,11 @@ export interface PushToken {
   nbf: number;
   /** UUID and public signing key */
   sub: string;
+}
+
+export interface IMySuperPrefixSignRequestParamsMySuperSuffix {
+  /** test only mode, using test issuer */
+  test?: number;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -318,23 +344,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name KeyRevokeNosecret
      * @request DELETE:/key
      */
-    keyRevokeNosecret: (
-      query: {
-        /** primary email associated to Key (ID) */
-        email: string;
-        /** primary phone number, international representation */
-        phone: string;
-        /** verification code sent by email */
-        code?: string;
-      },
-      params: RequestParams = {},
-    ) =>
+    keyRevokeNosecret: (query: IMySuperPrefixKeyRevokeNosecretParamsMySuperSuffix, params: RequestParams = {}) =>
       this.request<
         {
           /** pending or done */
           status?: string;
         },
-        Error
+        IMySuperPrefixErrorMySuperSuffix
       >({
         path: `/key`,
         method: "DELETE",
@@ -350,7 +366,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name KeyRegister
      * @request POST:/key
      */
-    keyRegister: (body: AuthentiqID, params: RequestParams = {}) =>
+    keyRegister: (body: IMySuperPrefixAuthentiqIDMySuperSuffix, params: RequestParams = {}) =>
       this.request<
         {
           /** revoke key */
@@ -358,7 +374,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           /** registered */
           status?: string;
         },
-        Error
+        IMySuperPrefixErrorMySuperSuffix
       >({
         path: `/key`,
         method: "POST",
@@ -374,20 +390,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name KeyRevoke
      * @request DELETE:/key/{PK}
      */
-    keyRevoke: (
-      pk: string,
-      query: {
-        /** revokation secret */
-        secret: string;
-      },
-      params: RequestParams = {},
-    ) =>
+    keyRevoke: ({ pk, ...query }: IMySuperPrefixKeyRevokeParamsMySuperSuffix, params: RequestParams = {}) =>
       this.request<
         {
           /** done */
           status?: string;
         },
-        Error
+        IMySuperPrefixErrorMySuperSuffix
       >({
         path: `/key/${pk}`,
         method: "DELETE",
@@ -412,7 +421,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           /** base64safe encoded public signing key */
           sub?: string;
         },
-        Error
+        IMySuperPrefixErrorMySuperSuffix
       >({
         path: `/key/${pk}`,
         method: "GET",
@@ -428,7 +437,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request HEAD:/key/{PK}
      */
     headKey: (pk: string, params: RequestParams = {}) =>
-      this.request<void, Error>({
+      this.request<void, IMySuperPrefixErrorMySuperSuffix>({
         path: `/key/${pk}`,
         method: "HEAD",
         ...params,
@@ -441,13 +450,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name KeyUpdate
      * @request POST:/key/{PK}
      */
-    keyUpdate: (pk: string, body: AuthentiqID, params: RequestParams = {}) =>
+    keyUpdate: (pk: string, body: IMySuperPrefixAuthentiqIDMySuperSuffix, params: RequestParams = {}) =>
       this.request<
         {
           /** confirmed */
           status?: string;
         },
-        Error
+        IMySuperPrefixErrorMySuperSuffix
       >({
         path: `/key/${pk}`,
         method: "POST",
@@ -463,13 +472,13 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name KeyBind
      * @request PUT:/key/{PK}
      */
-    keyBind: (pk: string, body: AuthentiqID, params: RequestParams = {}) =>
+    keyBind: (pk: string, body: IMySuperPrefixAuthentiqIDMySuperSuffix, params: RequestParams = {}) =>
       this.request<
         {
           /** confirmed */
           status?: string;
         },
-        Error
+        IMySuperPrefixErrorMySuperSuffix
       >({
         path: `/key/${pk}`,
         method: "PUT",
@@ -487,11 +496,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/login
      */
     pushLoginRequest: (
-      query: {
-        /** URI App will connect to */
-        callback: string;
-      },
-      body: PushToken,
+      query: IMySuperPrefixPushLoginRequestParamsMySuperSuffix,
+      body: IMySuperPrefixPushTokenMySuperSuffix,
       params: RequestParams = {},
     ) =>
       this.request<
@@ -499,7 +505,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           /** sent */
           status?: string;
         },
-        Error
+        IMySuperPrefixErrorMySuperSuffix
       >({
         path: `/login`,
         method: "POST",
@@ -518,11 +524,8 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request POST:/scope
      */
     signRequest: (
-      body: Claims,
-      query?: {
-        /** test only mode, using test issuer */
-        test?: number;
-      },
+      query: IMySuperPrefixSignRequestParamsMySuperSuffix,
+      body: IMySuperPrefixClaimsMySuperSuffix,
       params: RequestParams = {},
     ) =>
       this.request<
@@ -532,7 +535,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           /** waiting */
           status?: string;
         },
-        Error
+        IMySuperPrefixErrorMySuperSuffix
       >({
         path: `/scope`,
         method: "POST",
@@ -555,7 +558,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           /** done */
           status?: string;
         },
-        Error
+        IMySuperPrefixErrorMySuperSuffix
       >({
         path: `/scope/${job}`,
         method: "DELETE",
@@ -578,7 +581,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           /** base64safe encoded public signing key */
           sub?: string;
         },
-        Error
+        IMySuperPrefixErrorMySuperSuffix
       >({
         path: `/scope/${job}`,
         method: "GET",
@@ -594,7 +597,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @request HEAD:/scope/{job}
      */
     signRetrieveHead: (job: string, params: RequestParams = {}) =>
-      this.request<void, Error>({
+      this.request<void, IMySuperPrefixErrorMySuperSuffix>({
         path: `/scope/${job}`,
         method: "HEAD",
         ...params,
@@ -613,7 +616,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           /** confirmed */
           status?: string;
         },
-        Error
+        IMySuperPrefixErrorMySuperSuffix
       >({
         path: `/scope/${job}`,
         method: "POST",
@@ -637,7 +640,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           /** ready */
           status?: string;
         },
-        Error
+        IMySuperPrefixErrorMySuperSuffix
       >({
         path: `/scope/${job}`,
         method: "PUT",
